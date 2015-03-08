@@ -17,10 +17,3 @@ allprojects {
         jcenter()
     }
 }
-
-repositories {
-    mavenCentral()
-    flatDir {
-        dirs 'libs'
-    }
-}
