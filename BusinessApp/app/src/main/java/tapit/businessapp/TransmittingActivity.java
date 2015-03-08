@@ -13,7 +13,7 @@ import org.altbeacon.beacon.BeaconManager;
 
 
 public class TransmittingActivity extends Activity {
-    protected static final String TAG = "MonitoringActivity";
+    protected static final String TAG = "TransmittingActivity";
     private BeaconManager beaconManager;
 
 
