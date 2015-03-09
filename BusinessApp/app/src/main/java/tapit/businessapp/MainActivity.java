@@ -30,7 +30,8 @@ public class MainActivity extends ActionBarActivity {
         transmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Intent t = new Intent(MainActivity.this, TransmittingActivity.class);
+                startActivity(t);
             }
         });
     }
