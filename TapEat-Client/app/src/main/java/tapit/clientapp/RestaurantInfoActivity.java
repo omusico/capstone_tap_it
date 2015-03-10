@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.parse.ParseUser;
+
 
 public class RestaurantInfoActivity extends ActionBarActivity {
 
@@ -43,6 +45,19 @@ public class RestaurantInfoActivity extends ActionBarActivity {
                 Intent nextActivity = new Intent(RestaurantInfoActivity.this, CheckInActivity.class);
                 nextActivity.putExtra("restaurantName", thisRestaurant.getName());
                 startActivity(nextActivity);
+            }
+        });
+
+
+        //Temporary logout button, need to be removed later
+        Button logout = (Button) findViewById(R.id.logout);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.logOut();
+                Intent loginActivity = new Intent(RestaurantInfoActivity.this, LoginActivity.class);
+                startActivity(loginActivity);
+                finish();
             }
         });
     }

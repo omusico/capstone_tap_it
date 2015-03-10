@@ -48,4 +48,12 @@
         android:layout_below="@+id/RestaurantWaitTime"
         android:layout_alignParentStart="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Temporary test button for logout"
+        android:id="@+id/logout"
+        android:layout_below="@+id/checkin"
+        android:layout_alignParentStart="true" />
+
 </RelativeLayout>

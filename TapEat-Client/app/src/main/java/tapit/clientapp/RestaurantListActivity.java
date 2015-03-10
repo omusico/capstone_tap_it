@@ -1,11 +1,14 @@
 package tapit.clientapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+
+import com.parse.ParseUser;
 
 
 public class RestaurantListActivity extends ActionBarActivity {
@@ -18,6 +21,25 @@ public class RestaurantListActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+//        String signedInUser = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("username", "");
+//        if(signedInUser.length() == 0){
+//            Intent loginActivity = new Intent(RestaurantListActivity.this, LoginActivity.class);
+//            startActivity(loginActivity);
+//            finish();
+//        }
+
+        // Check if current user is logged in, else direct to login page
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+        } else {
+            Intent loginActivity = new Intent(RestaurantListActivity.this, LoginActivity.class);
+            startActivity(loginActivity);
+            finish();
+        }
+
+
         setContentView(R.layout.activity_restaurant_list);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
