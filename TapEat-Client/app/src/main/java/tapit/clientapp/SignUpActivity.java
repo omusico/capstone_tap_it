@@ -22,10 +22,10 @@ public class SignUpActivity extends ActionBarActivity {
         setContentView(R.layout.activity_sign_up);
 
         final EditText nameField = (EditText) findViewById(R.id.name);
-
+        final EditText phoneField = (EditText) findViewById(R.id.phone);
         final EditText usernameField = (EditText) findViewById(R.id.username);
         final EditText passwordField = (EditText) findViewById(R.id.password);
-        final Button signupButton = (Button) findViewById(R.id.signup);
+        final Button signUpButton = (Button) findViewById(R.id.signup);
 
 //        usernameField.addTextChangedListener(new TextWatcher() {
 //            @Override
@@ -46,14 +46,14 @@ public class SignUpActivity extends ActionBarActivity {
 //            }
 //        });
 
-        signupButton.setOnClickListener(new View.OnClickListener() {
+        signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser user = new ParseUser();
                 user.setUsername(usernameField.getText().toString());
                 user.setPassword(passwordField.getText().toString());
                 user.put("name", nameField.getText().toString());
-
+                user.put("phone", phoneField.getText().toString());
                 user.signUpInBackground(new SignUpCallback() {
                     public void done(ParseException e) {
                         if (e == null) {

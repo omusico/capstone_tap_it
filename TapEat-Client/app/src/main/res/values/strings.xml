@@ -8,5 +8,6 @@
     <string name="title_activity_check_in">CheckInActivity</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
+    <string name="title_activity_register_fragment">RegisterFragmentActivity</string>
 
 </resources>
