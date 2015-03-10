@@ -15,6 +15,7 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 
 public class CheckInActivity extends ActionBarActivity {
@@ -51,12 +52,18 @@ public class CheckInActivity extends ActionBarActivity {
                 RadioButton selectedSize = (RadioButton) findViewById(partySize.getCheckedRadioButtonId());
                 int size = Integer.parseInt(selectedSize.getText().toString());
 
+                ParseUser currentUser = ParseUser.getCurrentUser();
+                String username = currentUser.getUsername();
+                String customerName = currentUser.get("name").toString();
+
+
                 ParseObject party = new ParseObject("party");
                 party.put("RestaurantName", restaurantName);
                 party.put("size", size);
                 party.put("notes", notes.getText().toString());
 
-                party.put("customerName", "Steven");
+                party.put("customerName", customerName);
+                party.put("customerUsername", username);
 
                 party.saveInBackground();
 

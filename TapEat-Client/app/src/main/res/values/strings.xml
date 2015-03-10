@@ -7,5 +7,6 @@
     <string name="title_activity_restaurant_info">RestaurantInfoActivity</string>
     <string name="title_activity_check_in">CheckInActivity</string>
     <string name="title_activity_login">LoginActivity</string>
+    <string name="title_activity_sign_up">SignUpActivity</string>
 
 </resources>
