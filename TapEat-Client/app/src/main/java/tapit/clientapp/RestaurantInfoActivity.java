@@ -10,8 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.parse.ParseUser;
-
 
 public class RestaurantInfoActivity extends ActionBarActivity {
 
@@ -24,8 +22,8 @@ public class RestaurantInfoActivity extends ActionBarActivity {
         Bundle restaurantBundle = launchedMe.getBundleExtra("restaurantBundle");
         final Restaurant thisRestaurant = (Restaurant) restaurantBundle.getSerializable("serializedRestaurant");
 
-        TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
-        restaurantName.setText(thisRestaurant.getName());
+//        TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
+//        restaurantName.setText(thisRestaurant.getName());
 
         TextView restaurantDescription = (TextView) findViewById(R.id.RestaurantDescription);
         restaurantDescription.setText(thisRestaurant.getDescription());
@@ -50,16 +48,16 @@ public class RestaurantInfoActivity extends ActionBarActivity {
 
 
         //Temporary logout button, need to be removed later
-        Button logout = (Button) findViewById(R.id.logout);
-        logout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ParseUser.logOut();
-                Intent loginActivity = new Intent(RestaurantInfoActivity.this, LoginActivity.class);
-                startActivity(loginActivity);
-                finish();
-            }
-        });
+//        Button logout = (Button) findViewById(R.id.logout);
+//        logout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ParseUser.logOut();
+//                Intent loginActivity = new Intent(RestaurantInfoActivity.this, LoginActivity.class);
+//                startActivity(loginActivity);
+//                finish();
+//            }
+//        });
     }
 
 

@@ -20,7 +20,7 @@ public class Restaurant implements Serializable {
         this.image = image;
         this.longitude = 0;
         this.latitude = 0;
-        this.description = "taiwanese restaurant";
+        this.description = "taiwanese";
         this.number = "xxx-xxx-xxxx";
     }
 
