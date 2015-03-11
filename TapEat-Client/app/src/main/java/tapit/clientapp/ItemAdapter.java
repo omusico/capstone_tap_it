@@ -24,7 +24,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         ViewHolder viewHolder = new ViewHolder(view);
 
-
         return viewHolder;
 
 

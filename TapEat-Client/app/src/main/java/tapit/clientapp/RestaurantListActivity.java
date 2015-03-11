@@ -17,7 +17,7 @@ public class RestaurantListActivity extends ActionBarActivity {
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    Restaurant[] dataArray = new Restaurant[]{new Restaurant("Ding Tai Fung", R.drawable.dtf), new Restaurant("Kukai Ramen", R.drawable.kukai)};
+    Restaurant[] dataArray = new Restaurant[]{new Restaurant("Ding Tai Fung", R.drawable.dingtaifung), new Restaurant("Kukai Ramen", R.drawable.kukai)};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
