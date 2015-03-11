@@ -22,8 +22,8 @@ public class RestaurantInfoActivity extends ActionBarActivity {
         Bundle restaurantBundle = launchedMe.getBundleExtra("restaurantBundle");
         final Restaurant thisRestaurant = (Restaurant) restaurantBundle.getSerializable("serializedRestaurant");
 
-//        TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
-//        restaurantName.setText(thisRestaurant.getName());
+        TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
+        setTitle(thisRestaurant.getName());
 
         TextView restaurantDescription = (TextView) findViewById(R.id.RestaurantDescription);
         restaurantDescription.setText(thisRestaurant.getDescription());

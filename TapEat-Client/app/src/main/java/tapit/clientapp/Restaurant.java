@@ -14,9 +14,9 @@ public class Restaurant implements Serializable {
     private int wait_time;
     private int image;
 
-    public Restaurant(String name, int image){
+    public Restaurant(String name, int waittime, int image){
         this.name = name;
-        this.wait_time = 0;
+        this.wait_time = waittime;
         this.image = image;
         this.longitude = 0;
         this.latitude = 0;
@@ -34,7 +34,7 @@ public class Restaurant implements Serializable {
 
 
     public String getWaitTime(){
-        return Integer.toString(wait_time) + " minutes";
+        return Integer.toString(wait_time) + " mins";
     }
 
     public int getImage(){

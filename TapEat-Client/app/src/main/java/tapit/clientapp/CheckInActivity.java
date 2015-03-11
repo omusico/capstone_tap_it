@@ -28,6 +28,9 @@ public class CheckInActivity extends ActionBarActivity {
         Intent launchedMe = getIntent();
         final String restaurantName = launchedMe.getStringExtra("restaurantName");
 
+//      Set page title
+        setTitle(restaurantName);
+
         TextView restaurantNameLabel = (TextView) findViewById(R.id.RestaurantName);
         restaurantNameLabel.setText(restaurantName);
 
