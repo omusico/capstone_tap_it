@@ -7,5 +7,7 @@
     <string name="title_activity_ranging">RangingActivity</string>
     <string name="title_activity_transmitting">TransmittingActivity</string>
     <string name="title_activity_activity_transmitting">ActivityTransmitting</string>
+    <string name="title_activity_party_list_adapter">PartyListAdapter</string>
+    <string name="title_activity_customer_list">CustomerListActivity</string>
 
 </resources>

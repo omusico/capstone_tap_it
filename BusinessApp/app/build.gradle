@@ -23,4 +23,9 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'org.altbeacon:android-beacon-library:2+@aar'
+    dependencies {
+        compile 'com.parse.bolts:bolts-android:1.+'
+        compile fileTree(dir: 'libs', include: 'Parse-*.jar')
+    }
+    compile files('/Users/Stephen/Desktop/capstone_tap_it/BusinessApp/libs/Parse-1.8.3.jar')
 }
