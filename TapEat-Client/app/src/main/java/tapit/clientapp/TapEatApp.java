@@ -34,11 +34,9 @@ public class TapEatApp extends Application{
     @Override
     public void onCreate() {
 
-        Parse.initialize(this, "p9s07puYTNDTwUmtpGXEZo6zfEUCR30sU0e9nqRn", "kYAZoB6wM8FWuLLOzGhFfyiZGc4b2cfDNk1eamkL");
+        Parse.initialize(this, "30csrJ92WSyK4vLawClS1L72JYpHIPoOAGeDw4FX", "gK2cEy7QAUwlD0n3CTVHDcgewknkToHqZogdeag0");
 
         ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 
         ParsePush.subscribeInBackground("", new SaveCallback() {
             @Override

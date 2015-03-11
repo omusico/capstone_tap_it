@@ -64,6 +64,7 @@ public class CheckInActivity extends ActionBarActivity {
 
                 party.put("customerName", customerName);
                 party.put("customerUsername", username);
+                party.put("customerPhone", currentUser.get("phone"));
 
                 party.saveInBackground();
 

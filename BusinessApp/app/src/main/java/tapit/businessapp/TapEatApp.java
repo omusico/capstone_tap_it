@@ -3,7 +3,6 @@ package tapit.businessapp;
 import android.app.Application;
 
 import com.parse.Parse;
-import com.parse.ParseObject;
 
 
 /**
@@ -33,10 +32,6 @@ public class TapEatApp extends Application {
 
 
         Parse.initialize(this, "30csrJ92WSyK4vLawClS1L72JYpHIPoOAGeDw4FX", "gK2cEy7QAUwlD0n3CTVHDcgewknkToHqZogdeag0");
-
-        ParseObject testObject = new ParseObject("TestObject");
-        testObject.put("foo", "bar");
-        testObject.saveInBackground();
 //
 //        ParsePush.subscribeInBackground("", new SaveCallback() {
 //            @Override
