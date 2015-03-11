@@ -2,7 +2,9 @@ package tapit.businessapp;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.telephony.SmsManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -34,7 +36,7 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         View row = convertView;
 
 
@@ -55,6 +57,27 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
                 sendSMS(holder.party);
             }
         });
+
+        holder.removeButton = (Button) row.findViewById(R.id.noshow);
+        holder.removeButton.setTag(holder.party);
+        holder.removeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder adb = new AlertDialog.Builder(context);
+                adb.setTitle("Delete?");
+                adb.setMessage("Are you sure you want to remove " + items.get(position).getString("customerName")+ " from the list");
+                adb.setNegativeButton("Cancel", null);
+                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        items.get(position).deleteInBackground();
+                        items.remove(position);
+                        notifyDataSetChanged();
+                    }
+                });
+                adb.show();
+            }
+        });
+
         row.setTag(holder);
 
         setupItem(holder);
@@ -85,5 +108,6 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
         ParseObject party;
         TextView name;
         Button callButton;
+        Button removeButton;
     }
 }

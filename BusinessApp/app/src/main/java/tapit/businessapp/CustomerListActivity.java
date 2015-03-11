@@ -5,6 +5,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.parse.FindCallback;
@@ -18,6 +20,7 @@ import java.util.List;
 public class CustomerListActivity extends ActionBarActivity {
 
     private List<ParseObject> parties;
+    private int clickPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,14 +35,26 @@ public class CustomerListActivity extends ActionBarActivity {
                 if (e == null) {
                     Log.d("restaurant", "Retrieved " + restaurantList.size());
                     parties = restaurantList;
-                    PartyListAdapter adapter = new PartyListAdapter(CustomerListActivity.this, R.layout.party_list_item, parties);
+                    final PartyListAdapter adapter = new PartyListAdapter(CustomerListActivity.this, R.layout.party_list_item, parties);
                     ListView partyListView = (ListView)findViewById(R.id.party_list);
                     partyListView.setAdapter(adapter);
+
+                    partyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+
+                        @Override
+                        public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
+                            clickPosition = position;
+                        }
+                    });
+
                 } else {
                     Log.d("score", "Error: " + e.getMessage());
                 }
             }
         });
+
+
 
 
     }
