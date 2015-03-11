@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="tapit.clientapp" >
 
+    <!--User permission-->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -19,6 +20,8 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="tapit.clientapp" />
+
+
 
     <application
         android:name=".TapEatApp"
@@ -52,6 +55,7 @@
             android:label="@string/title_activity_sign_up" >
         </activity>
 
+        <!--Parce push notification-->
         <service android:name="com.parse.PushService" />
 
         <receiver android:name="com.parse.ParseBroadcastReceiver" >
@@ -80,11 +84,6 @@
                 <category android:name="tapit.clientapp" />
             </intent-filter>
         </receiver>
-
-        <activity
-            android:name=".RegisterFragmentActivity"
-            android:label="@string/title_activity_register_fragment" >
-        </activity>
     </application>
 
 </manifest>
