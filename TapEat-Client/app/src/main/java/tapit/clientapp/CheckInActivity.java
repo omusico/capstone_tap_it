@@ -12,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 
 import com.parse.ParseObject;
 import com.parse.ParseUser;
@@ -30,9 +29,6 @@ public class CheckInActivity extends ActionBarActivity {
 
 //      Set page title
         setTitle(restaurantName);
-
-        TextView restaurantNameLabel = (TextView) findViewById(R.id.RestaurantName);
-        restaurantNameLabel.setText(restaurantName);
 
         final EditText notes = (EditText) findViewById(R.id.notes);
         InputMethodManager imm = (InputMethodManager)getSystemService(
