@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.model;
 
 import java.io.Serializable;
 

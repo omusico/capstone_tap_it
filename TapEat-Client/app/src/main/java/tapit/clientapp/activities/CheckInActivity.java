@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
@@ -12,9 +12,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseObject;
 import com.parse.ParseUser;
+
+import tapit.clientapp.R;
+import tapit.clientapp.services.LocationService;
 
 
 public class CheckInActivity extends ActionBarActivity {
@@ -35,6 +40,24 @@ public class CheckInActivity extends ActionBarActivity {
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(notes.getWindowToken(), 0);
 
+        final TextView currentLocation = (TextView) findViewById(R.id.currentLocation);
+        // create class object
+        LocationService gps = new LocationService(CheckInActivity.this);
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
+            currentLocation.setText("Your Location is - \nLat: " + latitude + "\nLong: " + longitude);
+            // \n is for new line
+            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
 
         final Button checkInButton = (Button) findViewById(R.id.checkin);
 

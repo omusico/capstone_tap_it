@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.activities;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -14,6 +14,8 @@ import android.widget.EditText;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
+
+import tapit.clientapp.R;
 
 public class LoginActivity extends ActionBarActivity {
 

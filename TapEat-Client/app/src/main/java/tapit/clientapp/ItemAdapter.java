@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import tapit.clientapp.activities.RestaurantInfoActivity;
+import tapit.clientapp.model.Restaurant;
+
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private Restaurant[] dataSource;

@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import tapit.clientapp.R;
+import tapit.clientapp.model.Restaurant;
 
 
 public class RestaurantInfoActivity extends ActionBarActivity {

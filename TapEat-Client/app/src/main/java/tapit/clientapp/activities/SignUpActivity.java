@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
 import com.parse.ParseException;
+
+import tapit.clientapp.R;
 
 public class SignUpActivity extends ActionBarActivity {
 

@@ -40,8 +40,6 @@ public class CustomerListActivity extends ActionBarActivity {
                     partyListView.setAdapter(adapter);
 
                     partyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-
                         @Override
                         public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
                             clickPosition = position;
