@@ -5,6 +5,8 @@ import android.app.Service;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -12,6 +14,8 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
+
+import java.util.List;
 
 /**
  * Created by frank on 3/12/15.
@@ -180,6 +184,30 @@ public class LocationService extends Service implements LocationListener {
         alertDialog.show();
     }
 
+    public GeoPoint getLocationFromAddress(String strAddress) {
+
+        Geocoder coder = new Geocoder(this);
+        List<Address> address;
+        GeoPoint p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new GeoPoint((int) (location.getLatitude() * 1E6),
+                    (int) (location.getLongitude() * 1E6));
+
+        }catch (Exception e){
+            Log.e("Location Exceptions", e.getMessage());
+        }
+        return p1;
+    }
+
     @Override
     public void onLocationChanged(Location location) {
     }
@@ -199,5 +227,20 @@ public class LocationService extends Service implements LocationListener {
     @Override
     public IBinder onBind(Intent arg0) {
         return null;
+    }
+
+    public class GeoPoint implements Comparable<GeoPoint>{
+        public int latitude;
+        public int longitude;
+
+        public GeoPoint(int latitude, int longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+
+        @Override
+        public int compareTo(GeoPoint another) {
+            return 0;
+        }
     }
 }

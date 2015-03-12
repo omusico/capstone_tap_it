@@ -44,7 +44,7 @@ public class RestaurantInfoActivity extends ActionBarActivity {
 
                 // use restaurant name as id for now
                 Intent nextActivity = new Intent(RestaurantInfoActivity.this, CheckInActivity.class);
-                nextActivity.putExtra("restaurantName", thisRestaurant.getName());
+                nextActivity.putExtra("restaurant", thisRestaurant);
                 startActivity(nextActivity);
             }
         });
