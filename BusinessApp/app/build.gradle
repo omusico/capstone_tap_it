@@ -27,5 +27,5 @@ dependencies {
         compile 'com.parse.bolts:bolts-android:1.+'
         compile fileTree(dir: 'libs', include: 'Parse-*.jar')
     }
-    compile files('/Users/Stephen/Desktop/capstone_tap_it/BusinessApp/libs/Parse-1.8.3.jar')
+    compile files('../libs/Parse-1.8.3.jar')
 }
