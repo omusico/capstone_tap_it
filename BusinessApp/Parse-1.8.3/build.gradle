@@ -1,0 +1,5 @@
+configurations.create("default")
+artifacts.add("default", file('Parse-1.8.3.jar'))
+dependencies {
+    compile files('Parse-1.8.3.jar')
+}
