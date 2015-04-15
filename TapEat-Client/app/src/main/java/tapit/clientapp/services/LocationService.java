@@ -46,6 +46,8 @@ public class LocationService extends Service implements LocationListener {
     protected LocationManager locationManager;
 
     public LocationService(Context context) {
+        this.latitude = Double.NaN;
+        this.longitude = Double.NaN;
         this.mContext = context;
         getLocation();
     }
@@ -108,6 +110,18 @@ public class LocationService extends Service implements LocationListener {
         }
 
         return location;
+    }
+
+    //distance will be returned in meters.
+    public long distanceFromTwoGeoPoint(GeoPoint geoPoint1, GeoPoint geoPoint2){
+        long distance = Math.round(Haversine.distFrom(geoPoint1, geoPoint2));
+        return distance * 1000;
+    }
+
+
+    public GeoPoint getGeoPointLocation(){
+        GeoPoint p = new GeoPoint(this.getLatitude(), this.getLongitude());
+        return p;
     }
 
     /**
@@ -229,13 +243,35 @@ public class LocationService extends Service implements LocationListener {
         return null;
     }
 
-    public class GeoPoint implements Comparable<GeoPoint>{
-        public int latitude;
-        public int longitude;
 
-        public GeoPoint(int latitude, int longitude) {
+    public static class Haversine {
+        public static final double R = 6372.8; // In kilometers
+        public static double distFrom(GeoPoint geoPoint1, GeoPoint geoPoint2) {
+            double dLat = Math.toRadians(geoPoint2.latitude - geoPoint1.latitude);
+            double dLon = Math.toRadians(geoPoint2.longitude - geoPoint1.longitude);
+            double lat1 = Math.toRadians(geoPoint1.latitude);
+            double lat2 = Math.toRadians(geoPoint2.latitude);
+
+            double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2) * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+            double c = 2 * Math.asin(Math.sqrt(a));
+            return R * c;
+        }
+    }
+
+    public static class GeoPoint implements Comparable<GeoPoint>{
+        public double latitude;
+        public double longitude;
+
+        public GeoPoint(double latitude, double longitude) {
             this.latitude = latitude;
             this.longitude = longitude;
+        }
+
+        public boolean isEmpty(){
+            if(Double.isNaN(this.latitude) || Double.isNaN(this.latitude)){
+                return true;
+            }
+            return false;
         }
 
         @Override

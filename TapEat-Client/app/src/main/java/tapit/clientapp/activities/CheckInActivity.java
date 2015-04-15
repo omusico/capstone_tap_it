@@ -43,20 +43,14 @@ public class CheckInActivity extends ActionBarActivity {
                 Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(notes.getWindowToken(), 0);
 
-//        final TextView currentLocation = (TextView) findViewById(R.id.currentLocation);
         // create class object
         LocationService gps = new LocationService(CheckInActivity.this);
-
-        double latitude = 0.0;
-        double longitude = 0.0;
         // check if GPS enabled
+        long toRestaurantDistance = Long.MAX_VALUE;
         if(gps.canGetLocation()){
-
-            latitude = gps.getLatitude();
-            longitude = gps.getLongitude();
-//            currentLocation.setText("Your Location is - \nLat: " + latitude + "\nLong: " + longitude);
-            // \n is for new line
-            Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+            LocationService.GeoPoint currentLocation = gps.getGeoPointLocation();
+            toRestaurantDistance = gps.distanceFromTwoGeoPoint(currentLocation, restaurant.getRestaurantGeoPoint());
+            Toast.makeText(getApplicationContext(), "you are " + toRestaurantDistance + " meters far from this place.", Toast.LENGTH_LONG).show();
         }else{
             // can't get location
             // GPS or Network is not enabled
@@ -68,14 +62,13 @@ public class CheckInActivity extends ActionBarActivity {
 
         final RadioGroup partySize = (RadioGroup) findViewById(R.id.partySize);
 
-        if((Math.abs(latitude - restaurant.getLatitude()) > Constants.GEO_RADIUS_ALLOWENCE)
-                && (Math.abs(longitude - restaurant.getLongitude()) > Constants.GEO_RADIUS_ALLOWENCE)){
+        if(toRestaurantDistance > Constants.GEO_RADIUS_ALLOWENCE){
             checkInButton.setBackgroundColor(Color.GRAY);
             checkInButton.setEnabled(false);
         }else {
             partySize.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
                 public void onCheckedChanged(RadioGroup group, int checkedId) {
-                    checkInButton.setEnabled(true);
+                checkInButton.setEnabled(true);
                 }
             });
 
@@ -102,7 +95,6 @@ public class CheckInActivity extends ActionBarActivity {
                     party.saveInBackground();
 
                     finish();
-
                 }
             });
         }

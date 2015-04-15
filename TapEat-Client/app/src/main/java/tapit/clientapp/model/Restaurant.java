@@ -20,8 +20,8 @@ public class Restaurant implements Serializable {
         this.name = name;
         this.wait_time = waittime;
         this.image = image;
-        this.longitude = 0;
-        this.latitude = 0;
+        this.longitude = Double.NaN;
+        this.latitude = Double.NaN;
         this.description = "taiwanese";
         this.number = "xxx-xxx-xxxx";
     }
@@ -98,5 +98,9 @@ public class Restaurant implements Serializable {
 
     public void setImage(int image) {
         this.image = image;
+    }
+
+    public LocationService.GeoPoint getRestaurantGeoPoint(){
+        return new LocationService.GeoPoint(this.latitude, this.longitude);
     }
 }
