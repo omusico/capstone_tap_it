@@ -3,11 +3,17 @@ package tapit.clientapp;
 import android.app.Application;
 import android.util.Log;
 
+import com.firebase.client.Firebase;
 import com.parse.Parse;
 import com.parse.ParseException;
+import com.parse.ParseInstallation;
 import com.parse.ParseObject;
 import com.parse.ParsePush;
 import com.parse.SaveCallback;
+
+import java.util.Arrays;
+
+import tapit.clientapp.utils.Constants;
 
 /**
  * Created by ichenwu on 3/6/15.
@@ -33,31 +39,15 @@ public class TapEatApp extends Application{
 
     @Override
     public void onCreate() {
+        Firebase.setAndroidContext(this);
+        Parse.initialize(this, Constants.APPLICATION_ID, Constants.CLIENT_KEY);
 
-        Parse.initialize(this, "30csrJ92WSyK4vLawClS1L72JYpHIPoOAGeDw4FX", "gK2cEy7QAUwlD0n3CTVHDcgewknkToHqZogdeag0");
-
-        ParseObject testObject = new ParseObject("TestObject");
-
-        ParsePush.subscribeInBackground("", new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e == null) {
-                    Log.d("com.parse.push", "successfully subscribed to the broadcast channel.");
-                } else {
-                    Log.e("com.parse.push", "failed to subscribe for push", e);
-                }
-            }
-        });
-
-//        super.onCreate();
-//        this.repository = new TopicsRepo();
-//        Log.i(TAG, "Holy crap it works!");
+        // Save the current Installation to Parse, reinstall can make the change effective.
+        String[] channels = {"tapeat_client"};
+        ParseInstallation installation = ParseInstallation.getCurrentInstallation();
+        installation.put("channels", Arrays.asList(channels));
+        installation.saveInBackground();
     }
-
-//    public TopicsRepo getRepository() {
-//        return repository;
-//    }
-
 
 }
 

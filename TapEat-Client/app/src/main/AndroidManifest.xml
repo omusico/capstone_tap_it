@@ -20,11 +20,8 @@
       IMPORTANT: Change "com.parse.starter.permission.C2D_MESSAGE" in the lines below
       to match your app's package name + ".permission.C2D_MESSAGE".
     -->
-    <permission
-        android:name="tapit.clientapp"
-        android:protectionLevel="signature" />
-
-    <uses-permission android:name="tapit.clientapp" />
+    <permission android:name="tapit.clientapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+    <uses-permission android:name="tapit.clientapp.permission.C2D_MESSAGE" />
 
 
     <application
@@ -33,6 +30,8 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
+        <meta-data android:name="com.parse.push.gcm_sender_id"
+            android:value="id:840038096167" />
         <activity
             android:name=".activities.RestaurantListActivity"
             android:label="@string/app_name" >

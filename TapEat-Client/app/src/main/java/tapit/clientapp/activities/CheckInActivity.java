@@ -13,16 +13,18 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
+import com.firebase.client.Firebase;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import tapit.clientapp.Constants;
+import tapit.clientapp.model.Reservation;
+import tapit.clientapp.utils.Constants;
 import tapit.clientapp.R;
 import tapit.clientapp.model.Restaurant;
 import tapit.clientapp.services.LocationService;
+import tapit.clientapp.utils.DataPath;
 
 
 public class CheckInActivity extends ActionBarActivity {
@@ -77,22 +79,15 @@ public class CheckInActivity extends ActionBarActivity {
                 public void onClick(View v) {
                     RadioButton selectedSize = (RadioButton) findViewById(partySize.getCheckedRadioButtonId());
                     int size = Integer.parseInt(selectedSize.getText().toString());
-
+                    //Parse for user
                     ParseUser currentUser = ParseUser.getCurrentUser();
                     String username = currentUser.getUsername();
                     String customerName = currentUser.get("name").toString();
 
-
-                    ParseObject party = new ParseObject("party");
-                    party.put("RestaurantName", restaurant.getName());
-                    party.put("size", size);
-                    party.put("notes", notes.getText().toString());
-
-                    party.put("customerName", customerName);
-                    party.put("customerUsername", username);
-                    party.put("customerPhone", currentUser.get("phone"));
-
-                    party.saveInBackground();
+                    //Firebase for sync up the list.
+                    Firebase fire = new Firebase(Constants.FIREBASE_URL);
+                    fire.child(DataPath.RESERVATIONS + '/' + restaurant.getName());
+                    fire.push().setValue(new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString()));
 
                     finish();
                 }
