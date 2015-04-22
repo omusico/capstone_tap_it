@@ -9,6 +9,7 @@ import tapit.clientapp.services.LocationService;
  */
 public class Restaurant implements Serializable {
     private String name;
+    private String uniqueUserName;
     private String description;
     private double longitude;
     private double latitude;
@@ -16,8 +17,9 @@ public class Restaurant implements Serializable {
     private int wait_time;
     private int image;
 
-    public Restaurant(String name, int waittime, int image){
+    public Restaurant(String name, String uniqueUserName, int waittime, int image){
         this.name = name;
+        this.uniqueUserName = uniqueUserName;
         this.wait_time = waittime;
         this.image = image;
         this.longitude = Double.NaN;
@@ -27,8 +29,9 @@ public class Restaurant implements Serializable {
     }
 
 
-    public Restaurant(String name, int waittime, int image, double latitude, double longitude){
+    public Restaurant(String name, String uniqueUserName, int waittime, int image, double latitude, double longitude){
         this.name = name;
+        this.uniqueUserName = uniqueUserName;
         this.wait_time = waittime;
         this.image = image;
         this.longitude = longitude;
@@ -38,6 +41,13 @@ public class Restaurant implements Serializable {
     }
 
 
+    public String getUniqueUserName() {
+        return uniqueUserName;
+    }
+
+    public void setUniqueUserName(String uniqueUserName) {
+        this.uniqueUserName = uniqueUserName;
+    }
 
     public String getName(){
         return name;

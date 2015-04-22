@@ -2,24 +2,27 @@ package tapit.businessapp;
 
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import tapit.businessapp.model.Reservation;
+import tapit.businessapp.utils.Constants;
+import tapit.businessapp.utils.DataPath;
 
 
 public class CustomerListActivity extends ActionBarActivity {
 
-    private List<ParseObject> parties;
     private int clickPosition = -1;
 
     @Override
@@ -27,51 +30,76 @@ public class CustomerListActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_customer_list);
 
-//        setParties();
 
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("party");
-        query.findInBackground(new FindCallback<ParseObject>() {
-            public void done(List<ParseObject> restaurantList, ParseException e) {
-                if (e == null) {
-                    Log.d("restaurant", "Retrieved " + restaurantList.size());
-                    parties = restaurantList;
-                    final PartyListAdapter adapter = new PartyListAdapter(CustomerListActivity.this, R.layout.party_list_item, parties);
-                    ListView partyListView = (ListView)findViewById(R.id.party_list);
-                    partyListView.setAdapter(adapter);
+        // Get a reference to our posts
+        Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + Constants.RESTAURANT_NAME);
 
-                    partyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        // Attach an listener to read the data at our posts reference
+
+        fire.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                Map<String, Reservation> reservationMap = new HashMap<String, Reservation>();
+
+                for(DataSnapshot child : snapshot.getChildren()) {
+//                    Map<String, HashMap> childMap = (Map<String, HashMap>) child;
+                    Reservation reservation = new Reservation(
+                        child.child("restaurantName").getValue().toString(),
+                        Integer.parseInt(child.child("partySize").getValue().toString()),
+                        child.child("peference").getValue().toString(),
+                        child.child("customerName").getValue().toString(),
+                        child.child("customerUsername").getValue().toString(),
+                        child.child("customerPhone").getValue().toString()
+                    );
+                    reservationMap.put(child.getKey(), reservation);
+                }
+
+                System.out.println(snapshot.getValue());
+                List<String> keyList = new ArrayList<String>();
+                keyList.addAll(reservationMap.keySet());
+                final PartyListAdapter adapter = new PartyListAdapter(CustomerListActivity.this, R.layout.party_list_item, keyList, reservationMap);
+
+                ListView partyListView = (ListView)findViewById(R.id.party_list);
+                partyListView.setAdapter(adapter);
+
+                partyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
                             clickPosition = position;
                         }
-                    });
+                });
+            }
 
-                } else {
-                    Log.d("score", "Error: " + e.getMessage());
-                }
+            @Override
+            public void onCancelled(FirebaseError firebaseError) {
+                System.out.println("The read failed: " + firebaseError.getMessage());
             }
         });
 
-
-
-
-    }
-
-//    private void setParties(){
 //        ParseQuery<ParseObject> query = ParseQuery.getQuery("party");
-//        query.whereExists("RestaurantName");
 //        query.findInBackground(new FindCallback<ParseObject>() {
 //            public void done(List<ParseObject> restaurantList, ParseException e) {
 //                if (e == null) {
-//                    Log.d("restaurant", "Retrieved " + restaurantList.size() );
+//                    Log.d("restaurant", "Retrieved " + restaurantList.size());
 //                    parties = restaurantList;
+//                    final PartyListAdapter adapter = new PartyListAdapter(CustomerListActivity.this, R.layout.party_list_item, parties);
+//                    ListView partyListView = (ListView)findViewById(R.id.party_list);
+//                    partyListView.setAdapter(adapter);
+//
+//                    partyListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//                        @Override
+//                        public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
+//                            clickPosition = position;
+//                        }
+//                    });
+//
 //                } else {
 //                    Log.d("score", "Error: " + e.getMessage());
 //                }
 //            }
 //        });
-//
-//    }
+    }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -48,19 +48,6 @@ public class RestaurantInfoActivity extends ActionBarActivity {
                 startActivity(nextActivity);
             }
         });
-
-
-        //Temporary logout button, need to be removed later
-//        Button logout = (Button) findViewById(R.id.logout);
-//        logout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                ParseUser.logOut();
-//                Intent loginActivity = new Intent(RestaurantInfoActivity.this, LoginActivity.class);
-//                startActivity(loginActivity);
-//                finish();
-//            }
-//        });
     }
 
 

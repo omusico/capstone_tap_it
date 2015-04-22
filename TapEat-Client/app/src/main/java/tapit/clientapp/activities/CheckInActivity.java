@@ -85,8 +85,7 @@ public class CheckInActivity extends ActionBarActivity {
                     String customerName = currentUser.get("name").toString();
 
                     //Firebase for sync up the list.
-                    Firebase fire = new Firebase(Constants.FIREBASE_URL);
-                    fire.child(DataPath.RESERVATIONS + '/' + restaurant.getName());
+                    Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + restaurant.getUniqueUserName());
                     fire.push().setValue(new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString()));
 
                     finish();

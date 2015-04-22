@@ -21,16 +21,9 @@ import tapit.clientapp.utils.Constants;
 public class TapEatApp extends Application{
 
     private static TapEatApp instance;
-//    private TopicsRepo repository;
 
 
     public TapEatApp() {
-//        if (instance == null) {
-//            instance = this;
-//        } else {
-//            Log.e(TAG, "Created new QuizApp");
-//            throw new RuntimeException("Multiple app exception");
-//        }
     }
 
     public static TapEatApp getInstance() {
@@ -39,7 +32,9 @@ public class TapEatApp extends Application{
 
     @Override
     public void onCreate() {
+        //Initial Firebase
         Firebase.setAndroidContext(this);
+
         Parse.initialize(this, Constants.APPLICATION_ID, Constants.CLIENT_KEY);
 
         // Save the current Installation to Parse, reinstall can make the change effective.

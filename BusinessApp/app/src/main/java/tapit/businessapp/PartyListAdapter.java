@@ -15,24 +15,31 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.parse.ParseObject;
+import com.firebase.client.Firebase;
 
 import java.util.List;
+import java.util.Map;
+
+import tapit.businessapp.model.Reservation;
+import tapit.businessapp.utils.Constants;
+import tapit.businessapp.utils.DataPath;
 
 /**
  * Created by ichenwu on 3/10/15.
  */
-public class PartyListAdapter extends ArrayAdapter<ParseObject> {
+public class PartyListAdapter extends ArrayAdapter<String> {
 
-    private List<ParseObject> items;
+    private List<String> reservationKeyList;
+    private Map<String, Reservation> reservationMap;
     private int layoutResourceId;
     private Context context;
 
-    public PartyListAdapter(Context context, int layoutResourceId, List<ParseObject> items) {
-        super(context, layoutResourceId, items);
+    public PartyListAdapter(Context context, int layoutResourceId, List<String> reservationKeyList, Map<String, Reservation> reservationMap) {
+        super(context, layoutResourceId, reservationKeyList);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
-        this.items = items;
+        this.reservationKeyList = reservationKeyList;
+        this.reservationMap = reservationMap;
     }
 
     @Override
@@ -44,7 +51,8 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
         row = inflater.inflate(layoutResourceId, parent, false);
 
         final PartyListHolder holder = new PartyListHolder();
-        holder.party = items.get(position);
+        String reservationKey = this.reservationKeyList.get(position);
+        holder.party = this.reservationMap.get(reservationKey);
         holder.callButton = (Button)row.findViewById(R.id.callButton);
         holder.callButton.setTag(holder.party);
 
@@ -53,7 +61,7 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
         holder.callButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.i("aaaaaaaaaaaaaaaaaa",holder.party.get("customerPhone").toString());
+                Log.i("triggered sms to ",holder.party.getCustomerPhone());
                 sendSMS(holder.party);
             }
         });
@@ -65,13 +73,15 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
             public void onClick(View v) {
                 AlertDialog.Builder adb = new AlertDialog.Builder(context);
                 adb.setTitle("Delete?");
-                adb.setMessage("Are you sure you want to remove " + items.get(position).getString("customerName")+ " from the list");
+                adb.setMessage("Are you sure you want to remove " + reservationMap.get(reservationKeyList.get(position)).getCustomerName()+ " from the list");
                 adb.setNegativeButton("Cancel", null);
                 adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        items.get(position).deleteInBackground();
-                        items.remove(position);
-                        notifyDataSetChanged();
+                        Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + Constants.RESTAURANT_NAME);
+                        fire.child(reservationKeyList.get(position)).setValue(null);
+
+//                        items.remove(position);
+//                        notifyDataSetChanged();
                     }
                 });
                 adb.show();
@@ -84,8 +94,8 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
         return row;
     }
 
-    protected void sendSMS(ParseObject party) {
-        String toPhoneNumber = party.get("customerPhone").toString();
+    protected void sendSMS(Reservation party) {
+        String toPhoneNumber = party.getCustomerPhone();
         String smsMessage = "ready in 5 minutes!";
         try {
             SmsManager smsManager = SmsManager.getDefault();
@@ -101,11 +111,11 @@ public class PartyListAdapter extends ArrayAdapter<ParseObject> {
     }
 
     private void setupItem(PartyListHolder holder) {
-        holder.name.setText(holder.party.getString("customerName"));
+        holder.name.setText(holder.party.getCustomerName());
     }
 
     public static class PartyListHolder {
-        ParseObject party;
+        Reservation party;
         TextView name;
         Button callButton;
         Button removeButton;
