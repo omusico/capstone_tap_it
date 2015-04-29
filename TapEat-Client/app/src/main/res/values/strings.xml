@@ -9,5 +9,7 @@
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_sign_up">SignUpActivity</string>
     <string name="title_activity_register_fragment">RegisterFragmentActivity</string>
+    <string name="drawer_open">Navigation drawer open</string>
+    <string name="drawer_close">Navigation drawer close</string>
 
 </resources>
