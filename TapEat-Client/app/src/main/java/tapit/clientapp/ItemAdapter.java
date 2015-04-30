@@ -1,6 +1,9 @@
 package tapit.clientapp;
 
-import android.content.Intent;
+import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -9,15 +12,18 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import tapit.clientapp.activities.RestaurantInfoActivity;
+import tapit.clientapp.fragments.RestaurantInfoFragment;
 import tapit.clientapp.model.Restaurant;
 
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
-    private Restaurant[] dataSource;
-    public ItemAdapter(Restaurant[] dataArgs){
-        dataSource = dataArgs;
 
+    private Restaurant[] dataSource;
+    private Context _context;
+
+    public ItemAdapter(Restaurant[] dataArgs, Context context){
+        dataSource = dataArgs;
+        _context = context;
     }
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -28,8 +34,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         ViewHolder viewHolder = new ViewHolder(view);
 
         return viewHolder;
-
-
     }
 
     @Override
@@ -41,13 +45,25 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("aaa");
-                Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
-                Restaurant selectedRestaurant = dataSource[position];
+//                Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
+//                Restaurant selectedRestaurant = dataSource[position];
+//                Bundle restaurantBundle = new Bundle();
+//                restaurantBundle.putSerializable("serializedRestaurant", selectedRestaurant);
+//                nextActivity.putExtra("restaurantBundle", restaurantBundle);
+//                v.getContext().startActivity(nextActivity);
+
+                // Initialize RestaurantInfoFragment
+                Fragment restaurantInfo = new RestaurantInfoFragment();
+
                 Bundle restaurantBundle = new Bundle();
-                restaurantBundle.putSerializable("serializedRestaurant", selectedRestaurant);
-                nextActivity.putExtra("restaurantBundle", restaurantBundle);
-                v.getContext().startActivity(nextActivity);
+                restaurantBundle.putSerializable("serializedRestaurant", dataSource[position]);
+                restaurantInfo.setArguments(restaurantBundle);
+
+                // Grab fragmentManager from app
+                FragmentManager fragmentManager = ((Activity) _context).getFragmentManager();
+                fragmentManager.beginTransaction()
+                        .replace(R.id.mainContent, restaurantInfo)
+                        .commit();
             }
         });
     }

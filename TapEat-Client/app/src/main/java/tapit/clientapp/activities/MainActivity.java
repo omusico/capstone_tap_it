@@ -8,8 +8,6 @@ import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -27,62 +25,40 @@ import com.parse.ParseUser;
 
 import java.util.ArrayList;
 
-import tapit.clientapp.ItemAdapter;
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
-import tapit.clientapp.model.Restaurant;
+import tapit.clientapp.fragments.RestaurantListFragment;
 
 
-public class RestaurantListActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity {
 
     // ActionBarDrawer
-    private static String TAG = RestaurantListActivity.class.getSimpleName();
+    private static String TAG = MainActivity.class.getSimpleName();
     ListView mDrawerList;
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private FragmentManager fragmentManager = getFragmentManager();
+
 
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
-
-    private RecyclerView recyclerView;
-    private RecyclerView.Adapter recycleAdapter;
-    private RecyclerView.LayoutManager layoutManager;
-
-    Restaurant[] dataArray = new Restaurant[]{
-            new Restaurant("Ding Tai Fung", "dtfSeattleUniversityVillage1", 40, R.drawable.dingtaifung, 47.6550232, -122.3082931),
-            new Restaurant("Kukai Ramen", "kukaiSeattle", 15, R.drawable.kukai)
-    };
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_restaurant_list);
-
-//        String signedInUser = PreferenceManager.getDefaultSharedPreferences(getBaseContext()).getString("username", "");
-//        if(signedInUser.length() == 0){
-//            Intent loginActivity = new Intent(RestaurantListActivity.this, LoginActivity.class);
-//            startActivity(loginActivity);
-//            finish();
-//        }
-
-        // Check if current user is logged in, else direct to login page
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            // do stuff with the user
-        } else {
-            Intent loginActivity = new Intent(RestaurantListActivity.this, LoginActivity.class);
-            startActivity(loginActivity);
-            finish();
-        }
+        setContentView(R.layout.activity_main);
 
         //show hamburger menu
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mNavItems.add(new NavItem("Home", "Meetup destination", R.drawable.logo));
+        mNavItems.add(new NavItem("Nearby Restaurants", "Search nearby restaurants", R.drawable.logo));
         mNavItems.add(new NavItem("Preferences", "Change your preferences", R.drawable.logo));
         mNavItems.add(new NavItem("About", "Get to know about us", R.drawable.logo));
 
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
+
+        // FragmentLayout
+        final RelativeLayout mMainContent = (RelativeLayout) findViewById(R.id.mainContent);
 
         // Populate the Navigtion Drawer with options
         mDrawerPane = (RelativeLayout) findViewById(R.id.drawerPane);
@@ -101,9 +77,15 @@ public class RestaurantListActivity extends ActionBarActivity {
             @Override
             public void onDrawerClosed(View drawerView) {
                 super.onDrawerClosed(drawerView);
-                Log.d(TAG, "onDrawerClosed: " + getTitle());
-
                 invalidateOptionsMenu();
+            }
+
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                super.onDrawerSlide(drawerView, slideOffset);
+                mMainContent.setTranslationX(slideOffset * drawerView.getWidth()/2);
+                mDrawerLayout.bringChildToFront(drawerView);
+                mDrawerLayout.requestLayout();
             }
         };
 
@@ -113,16 +95,39 @@ public class RestaurantListActivity extends ActionBarActivity {
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                selectItemFromDrawer(position);
+                selectItemFromDrawer(position);
             }
         });
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        recyclerView.setHasFixedSize(true);
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-        recycleAdapter = new ItemAdapter(dataArray);
-        recyclerView.setAdapter(recycleAdapter);
+        // Check if current user is logged in, else direct to login page
+        // if logged in, inflate restaurant list fragment
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            // do stuff with the user
+            fragmentManager.beginTransaction()
+//                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+                    .replace(R.id.mainContent, new RestaurantListFragment())
+                    .addToBackStack(null)
+                    .commit();
+        } else {
+            Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(loginActivity);
+            finish();
+        }
+    }
+
+    /*
+    * Handle back navigation on fragments
+    * */
+    @Override
+    public void onBackPressed(){
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fragmentManager.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
     }
 
     // Called when invalidateOptionsMenu() is invoked
@@ -138,11 +143,22 @@ public class RestaurantListActivity extends ActionBarActivity {
     * is selected.
     * */
     private void selectItemFromDrawer(int position) {
-        Fragment fragment = new PreferencesFragment();
+        Fragment preferenceFragment = new PreferencesFragment();
+        Fragment restaurantList = new RestaurantListFragment();
 
-        FragmentManager fragmentManager = getFragmentManager();
+        Fragment currentFragment;
+        switch(position) {
+            case 0: currentFragment = restaurantList;
+                break;
+            case 1: currentFragment = preferenceFragment;
+                break;
+            default:
+                currentFragment = restaurantList;
+                break;
+        }
+
         fragmentManager.beginTransaction()
-                .replace(R.id.mainContent, fragment)
+                .replace(R.id.mainContent, currentFragment)
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
@@ -239,4 +255,9 @@ public class RestaurantListActivity extends ActionBarActivity {
             return view;
         }
     }
+
+    public void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
 }

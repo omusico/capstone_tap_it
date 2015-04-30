@@ -47,7 +47,7 @@ public class LoginActivity extends ActionBarActivity {
                     public void done(ParseUser user, ParseException e) {
                         if (user != null) {
                             // Hooray! The user is logged in.
-                            Intent nextActivity = new Intent(LoginActivity.this, RestaurantListActivity.class);
+                            Intent nextActivity = new Intent(LoginActivity.this, MainActivity.class);
                             startActivity(nextActivity);
                             finish();
                         } else {
@@ -82,7 +82,7 @@ public class LoginActivity extends ActionBarActivity {
 //                            if(users.size() != 0){
 //                                PreferenceManager.getDefaultSharedPreferences(getBaseContext()).edit().putString("username", username).commit();
 //
-//                                Intent nextActivity = new Intent(LoginActivity.this, RestaurantListActivity.class);
+//                                Intent nextActivity = new Intent(LoginActivity.this, MainActivity.class);
 //                                startActivity(nextActivity);
 //                            }
 //                        } else {

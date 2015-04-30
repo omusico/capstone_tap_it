@@ -33,7 +33,7 @@
         <meta-data android:name="com.parse.push.gcm_sender_id"
             android:value="id:840038096167" />
         <activity
-            android:name=".activities.RestaurantListActivity"
+            android:name=".activities.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -61,7 +61,7 @@ public class SignUpActivity extends ActionBarActivity {
                         if (e == null) {
 
                             // Hooray! Let them use the app now.
-                            Intent nextActivity = new Intent(SignUpActivity.this,RestaurantListActivity.class);
+                            Intent nextActivity = new Intent(SignUpActivity.this,MainActivity.class);
                             startActivity(nextActivity);
                             finish();
                         } else {
