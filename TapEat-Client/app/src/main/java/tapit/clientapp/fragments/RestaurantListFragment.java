@@ -28,7 +28,7 @@ public class RestaurantListFragment extends Fragment{
 
     public RestaurantListFragment() {
         // Required empty public constructor
-    }
+    };
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState){

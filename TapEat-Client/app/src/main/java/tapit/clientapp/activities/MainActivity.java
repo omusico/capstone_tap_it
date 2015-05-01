@@ -91,6 +91,9 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+        // Show hamburger Menu
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         // Drawer Item click listeners
         mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -105,7 +108,6 @@ public class MainActivity extends ActionBarActivity {
         if (currentUser != null) {
             // do stuff with the user
             fragmentManager.beginTransaction()
-//                    .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
                     .replace(R.id.mainContent, new RestaurantListFragment())
                     .addToBackStack(null)
                     .commit();

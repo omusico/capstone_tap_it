@@ -43,7 +43,8 @@
         </activity>
         <activity
             android:name=".activities.RestaurantInfoActivity"
-            android:label="@string/title_activity_restaurant_info" >
+            android:label="@string/title_activity_restaurant_info"
+            android:parentActivityName=".activities.MainActivity">
         </activity>
         <activity
             android:name=".activities.CheckInActivity"

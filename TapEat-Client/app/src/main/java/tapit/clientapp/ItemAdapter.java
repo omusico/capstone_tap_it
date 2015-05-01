@@ -1,9 +1,7 @@
 package tapit.clientapp;
 
-import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import tapit.clientapp.fragments.RestaurantInfoFragment;
+import tapit.clientapp.activities.RestaurantInfoActivity;
 import tapit.clientapp.model.Restaurant;
 
 
@@ -45,25 +43,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
-//                Restaurant selectedRestaurant = dataSource[position];
-//                Bundle restaurantBundle = new Bundle();
-//                restaurantBundle.putSerializable("serializedRestaurant", selectedRestaurant);
-//                nextActivity.putExtra("restaurantBundle", restaurantBundle);
-//                v.getContext().startActivity(nextActivity);
-
-                // Initialize RestaurantInfoFragment
-                Fragment restaurantInfo = new RestaurantInfoFragment();
-
+                Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
+                Restaurant selectedRestaurant = dataSource[position];
                 Bundle restaurantBundle = new Bundle();
-                restaurantBundle.putSerializable("serializedRestaurant", dataSource[position]);
-                restaurantInfo.setArguments(restaurantBundle);
+                restaurantBundle.putSerializable("serializedRestaurant", selectedRestaurant);
+                nextActivity.putExtra("restaurantBundle", restaurantBundle);
+                v.getContext().startActivity(nextActivity);
 
-                // Grab fragmentManager from app
-                FragmentManager fragmentManager = ((Activity) _context).getFragmentManager();
-                fragmentManager.beginTransaction()
-                        .replace(R.id.mainContent, restaurantInfo)
-                        .commit();
+
             }
         });
     }
@@ -85,8 +72,8 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {
-//                    Intent nextActivity = new Intent(v.getContext(), RestaurantInfoActivity.class);
-//                    Restaurant selectedRestaurant = dataSource
+//                    Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
+//                    Restaurant selectedRestaurant = dataSource[position];
 //                }
 //            });
         }
