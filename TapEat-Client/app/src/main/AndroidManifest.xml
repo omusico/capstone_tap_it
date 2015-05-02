@@ -58,6 +58,10 @@
             android:name=".activities.SignUpActivity"
             android:label="@string/title_activity_sign_up" >
         </activity>
+        <activity
+            android:name=".activities.FancySignUpActivity"
+            android:label="@string/title_activity_fancy_sign_up" >
+        </activity>
 
         <!--Parce push notification-->
         <service android:name="com.parse.PushService" />
