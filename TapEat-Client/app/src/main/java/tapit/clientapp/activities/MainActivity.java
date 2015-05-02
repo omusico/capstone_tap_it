@@ -111,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
                     .replace(R.id.mainContent, new RestaurantListFragment())
                     .commit();
         } else {
-            Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
+            Intent loginActivity = new Intent(MainActivity.this, SignUpActivity.class);
             startActivity(loginActivity);
             finish();
         }
