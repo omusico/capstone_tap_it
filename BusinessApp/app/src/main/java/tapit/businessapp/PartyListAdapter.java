@@ -79,9 +79,6 @@ public class PartyListAdapter extends ArrayAdapter<String> {
                     public void onClick(DialogInterface dialog, int which) {
                         Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + Constants.RESTAURANT_NAME);
                         fire.child(reservationKeyList.get(position)).setValue(null);
-
-//                        items.remove(position);
-//                        notifyDataSetChanged();
                     }
                 });
                 adb.show();
