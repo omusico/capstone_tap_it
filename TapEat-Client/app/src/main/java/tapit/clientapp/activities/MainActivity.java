@@ -109,7 +109,6 @@ public class MainActivity extends ActionBarActivity {
             // do stuff with the user
             fragmentManager.beginTransaction()
                     .replace(R.id.mainContent, new RestaurantListFragment())
-                    .addToBackStack(null)
                     .commit();
         } else {
             Intent loginActivity = new Intent(MainActivity.this, LoginActivity.class);
