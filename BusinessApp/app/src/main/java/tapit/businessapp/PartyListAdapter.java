@@ -42,52 +42,59 @@ public class PartyListAdapter extends ArrayAdapter<String> {
         this.reservationMap = reservationMap;
     }
 
+
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
-        View row = convertView;
-
-
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        row = inflater.inflate(layoutResourceId, parent, false);
+        View row = inflater.inflate(layoutResourceId, parent, false);
 
         final PartyListHolder holder = new PartyListHolder();
         String reservationKey = this.reservationKeyList.get(position);
         holder.party = this.reservationMap.get(reservationKey);
-        holder.callButton = (Button)row.findViewById(R.id.callButton);
-        holder.callButton.setTag(holder.party);
 
-        holder.name = (TextView)row.findViewById(R.id.party_name);
+        if(layoutResourceId == R.layout.party_list_item){
+            holder.callButton = (Button)row.findViewById(R.id.callButton);
+            holder.callButton.setTag(holder.party);
+            holder.name = (TextView)row.findViewById(R.id.party_name);
+            holder.callButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("triggered sms to ",holder.party.getCustomerPhone());
+                    sendSMS(holder.party);
+                }
+            });
 
-        holder.callButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("triggered sms to ",holder.party.getCustomerPhone());
-                sendSMS(holder.party);
-            }
-        });
+            holder.removeButton = (Button) row.findViewById(R.id.noshow);
+            holder.removeButton.setTag(holder.party);
+            holder.removeButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    AlertDialog.Builder adb = new AlertDialog.Builder(context);
+                    adb.setTitle("Delete?");
+                    adb.setMessage("Are you sure you want to remove " + reservationMap.get(reservationKeyList.get(position)).getCustomerName()+ " from the list");
+                    adb.setNegativeButton("Cancel", null);
+                    adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + Constants.RESTAURANT_NAME);
+                            fire.child(reservationKeyList.get(position)).setValue(null);
+                        }
+                    });
+                    adb.show();
+                }
+            });
 
-        holder.removeButton = (Button) row.findViewById(R.id.noshow);
-        holder.removeButton.setTag(holder.party);
-        holder.removeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder adb = new AlertDialog.Builder(context);
-                adb.setTitle("Delete?");
-                adb.setMessage("Are you sure you want to remove " + reservationMap.get(reservationKeyList.get(position)).getCustomerName()+ " from the list");
-                adb.setNegativeButton("Cancel", null);
-                adb.setPositiveButton("Ok", new AlertDialog.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + Constants.RESTAURANT_NAME);
-                        fire.child(reservationKeyList.get(position)).setValue(null);
-                    }
-                });
-                adb.show();
-            }
-        });
+            row.setTag(holder);
 
-        row.setTag(holder);
+            setupItem(holder);
+        }else{
+            TextView partyName = (TextView)row.findViewById(R.id.party_name);
+            partyName.setText(holder.party.getCustomerName());
+            TextView partySize = (TextView)row.findViewById(R.id.party_size);
+            partySize.setText(Integer.toString(holder.party.getPartySize()));
+            TextView partyStatus = (TextView)row.findViewById(R.id.party_status);
+            //TODO: add customer status in reservation field.
+        }
 
-        setupItem(holder);
         return row;
     }
 
