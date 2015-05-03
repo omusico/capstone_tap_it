@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
+import tapit.clientapp.removeable.SignUpActivity;
 
 
 public class MainActivity extends ActionBarActivity {

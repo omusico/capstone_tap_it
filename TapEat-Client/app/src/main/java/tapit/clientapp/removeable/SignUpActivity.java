@@ -1,4 +1,4 @@
-package tapit.clientapp.activities;
+package tapit.clientapp.removeable;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -15,6 +15,7 @@ import com.parse.SignUpCallback;
 import com.parse.ParseException;
 
 import tapit.clientapp.R;
+import tapit.clientapp.activities.MainActivity;
 
 public class SignUpActivity extends ActionBarActivity {
 
@@ -25,35 +26,14 @@ public class SignUpActivity extends ActionBarActivity {
 
         final EditText nameField = (EditText) findViewById(R.id.name);
         final EditText phoneField = (EditText) findViewById(R.id.phone);
-        final EditText usernameField = (EditText) findViewById(R.id.username);
-        final EditText passwordField = (EditText) findViewById(R.id.password);
         final Button signUpButton = (Button) findViewById(R.id.signup);
-
-//        usernameField.addTextChangedListener(new TextWatcher() {
-//            @Override
-//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-//                signupButton.setEnabled(false);
-//            }
-//
-//            @Override
-//            public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                if(s.length()!=0){
-//                    signupButton.setEnabled(true);
-//                }
-//            }
-//
-//            @Override
-//            public void afterTextChanged(Editable s) {
-//
-//            }
-//        });
 
         signUpButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ParseUser user = new ParseUser();
-                user.setUsername(usernameField.getText().toString());
-                user.setPassword(passwordField.getText().toString());
+                user.setUsername(phoneField.getText().toString());
+                user.setPassword(phoneField.getText().toString());
                 user.put("name", nameField.getText().toString());
                 user.put("phone", phoneField.getText().toString());
                 user.signUpInBackground(new SignUpCallback() {

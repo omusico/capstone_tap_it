@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import org.codepond.wizardroid.WizardStep;
@@ -22,11 +24,12 @@ public class phoneNumberStep extends WizardStep {
     //Set your layout here
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_preferences, container, false);
-        TextView tv = (TextView) v.findViewById(R.id.textView);
-        tv.setText("This is an example of Step 2 and also the last step in this wizard. " +
-                "By pressing Finish you will conclude this wizard and go back to the main activity." +
-                "Hit the back button to go back to the previous step.");
+        View v = inflater.inflate(R.layout.fragment_sign_up, container, false);
+        TextView tv = (EditText) v.findViewById(R.id.editText);
+        ImageView iv = (ImageView) v.findViewById(R.id.main_backgroundImage);
+        iv.setImageResource(R.drawable.background_num);
+        tv.setHint("Phone Number");
+
         return v;
     }
 }
