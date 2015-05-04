@@ -5,49 +5,38 @@
 'use strict';
 
 var React = require('react-native');
+var TimeLineListView = require('./components/TimeLineListView');
+var PressDragSelectGesture = require('./components/PressDragSelectGesture');
+var SlideMenu = require('./components/SlideMenu');
+
 var {
   AppRegistry,
   StyleSheet,
+  ListView,
+  Image,
   Text,
   View,
 } = React;
 
-var business_react_native = React.createClass({
-  render: function() {
-    return (
-      <View style={styles.container}>
-        <Text style={styles.welcome}>
-          Welcome to React Native!
-        </Text>
-        <Text style={styles.instructions}>
-          To get started, edit index.ios.js
-        </Text>
-        <Text style={styles.instructions}>
-          Press Cmd+R to reload,{'\n'}
-          Cmd+Control+Z for dev menu
-        </Text>
-      </View>
-    );
-  }
+var TapEat = React.createClass({
+    render: function() {
+        var date = new Date();
+        return (
+          <TimeLineListView />
+        );
+    }
 });
 
 var styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+  layout: {
+    marginTop: 20,
+    backgroundColor: '#527FE4',
   },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
+  text: {
+    color: '#FFFFFF'
+  }
 });
 
-AppRegistry.registerComponent('business_react_native', () => business_react_native);
+AppRegistry.registerComponent('business_react_native', () => TapEat);
+
+
