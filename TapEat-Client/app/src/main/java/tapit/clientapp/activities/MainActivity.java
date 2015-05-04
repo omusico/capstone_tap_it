@@ -28,7 +28,6 @@ import java.util.ArrayList;
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
-import tapit.clientapp.removeable.SignUpActivity;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -112,7 +111,7 @@ public class MainActivity extends ActionBarActivity {
                     .replace(R.id.mainContent, new RestaurantListFragment())
                     .commit();
         } else {
-            Intent loginActivity = new Intent(MainActivity.this, SignUpActivity.class);
+            Intent loginActivity = new Intent(MainActivity.this, FancySignUpActivity.class);
             startActivity(loginActivity);
             finish();
         }
