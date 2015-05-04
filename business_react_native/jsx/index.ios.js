@@ -5,9 +5,8 @@
 'use strict';
 
 var React = require('react-native');
-var TimeLineListView = require('./components/TimeLineListView');
-var PressDragSelectGesture = require('./components/PressDragSelectGesture');
 var SlideMenu = require('./components/SlideMenu');
+var TapEatNavigator = require('./components/TapEatNavigator');
 
 var {
   AppRegistry,
@@ -22,7 +21,9 @@ var TapEat = React.createClass({
     render: function() {
         var date = new Date();
         return (
-          <TimeLineListView />
+          <View>
+            <TapEatNavigator />
+          </View>
         );
     }
 });
