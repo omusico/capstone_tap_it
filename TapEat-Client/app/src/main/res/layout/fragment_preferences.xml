@@ -15,7 +15,7 @@
     <RelativeLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:background="#40000000">
+        android:background="#65000000">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -44,8 +44,7 @@
                     android:paddingBottom="13dp"
                     android:background="@drawable/perference_button"
                     android:text="Only Notify Me When the Table is Ready"
-                    android:textSize="10dp"
-                    android:gravity="left|center_vertical"
+                    android:textSize="11dp"
                     android:padding="10dp" />
 
                 <Button
@@ -58,8 +57,7 @@
                     android:paddingBottom="13dp"
                     android:background="@drawable/perference_button"
                     android:text="Constantly notify me the wait status"
-                    android:textSize="10dp"
-                    android:gravity="left|center_vertical"
+                    android:textSize="11dp"
                     android:padding="10dp"
                     android:layout_marginTop="50dp" />
 
