@@ -610,6 +610,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = business_react_native;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -629,6 +630,7 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = business_react_native;
 				PROVISIONING_PROFILE = "";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
