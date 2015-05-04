@@ -3,7 +3,7 @@
 
 var React = require('react-native');
 var Theme = require('../style/theme');
-var VCalUtil = require('../utils/VCalUtil');
+var Firebase = require('firebase-react-native');
 
 var {
     ListView,
