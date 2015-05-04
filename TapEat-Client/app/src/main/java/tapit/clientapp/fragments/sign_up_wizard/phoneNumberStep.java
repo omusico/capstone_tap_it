@@ -51,6 +51,7 @@ public class phoneNumberStep extends Fragment {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
                 pager.setCurrentItem(pager.getCurrentItem()+1);
             }
         });

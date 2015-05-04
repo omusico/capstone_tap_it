@@ -9,10 +9,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
+import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SignUpCallback;
-import com.parse.ParseException;
 
 import tapit.clientapp.R;
 import tapit.clientapp.activities.MainActivity;
@@ -46,6 +47,10 @@ public class SignUpActivity extends ActionBarActivity {
                             finish();
                         } else {
                             Log.d("error", e.toString());
+
+                            // Pop toast to tell user what happened
+                            Toast.makeText(getApplicationContext(), e.toString(), Toast.LENGTH_LONG).show();
+
                             // Sign up didn't succeed. Look at the ParseException
                             // to figure out what went wrong
                         }

@@ -47,6 +47,7 @@ public class nameStep extends Fragment {
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                ((FancySignUpActivity)getActivity()).setCustomerName(tv.getText().toString());
                 pager.setCurrentItem(pager.getCurrentItem()+1);
             }
         });
