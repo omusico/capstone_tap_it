@@ -1,5 +1,6 @@
 package tapit.clientapp.activities;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,6 +9,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -26,7 +30,7 @@ public class FancySignUpActivity extends FragmentActivity {
     ViewPager pager;
     String name;
     String phoneNumber;
-    int preference;
+    View preference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,26 @@ public class FancySignUpActivity extends FragmentActivity {
 
         pager = (ViewPager) findViewById(R.id.viewPager);
         pager.setAdapter(new MyPagerAdapter(getSupportFragmentManager()));
+
+        // Offset fragment rerender to more than 2 pages
+        pager.setOffscreenPageLimit(2);
+
+        pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageSelected(int position) {
+                final InputMethodManager imm = (InputMethodManager)getSystemService(
+                        Context.INPUT_METHOD_SERVICE);
+                imm.hideSoftInputFromWindow(pager.getWindowToken(), 0);
+            }
+
+            @Override
+            public void onPageScrolled(int position, float offset, int offsetPixels) {
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+            }
+        });
     }
 
     private class MyPagerAdapter extends FragmentPagerAdapter {
@@ -79,7 +103,7 @@ public class FancySignUpActivity extends FragmentActivity {
         user.setPassword(getPhoneNumber());
         user.put("name", getCustomerName());
         user.put("phone", getPhoneNumber());
-        user.put("preference", getPreference());
+        user.put("preference", getPreference().getId());
         user.signUpInBackground(new SignUpCallback() {
             public void done(ParseException e) {
                 if (e == null) {
@@ -92,9 +116,14 @@ public class FancySignUpActivity extends FragmentActivity {
                     Log.d("error", e.toString());
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
+                    popToast();
                 }
             }
         });
+    }
+
+    public void popToast(){
+        Toast.makeText(this, "This phone number has been registered in our system", Toast.LENGTH_LONG).show();
     }
 
     /**
@@ -109,8 +138,8 @@ public class FancySignUpActivity extends FragmentActivity {
         this.phoneNumber = number;
     }
 
-    public void setPreference(int p){
-        this.preference = p;
+    public void setPreference(View v){
+        this.preference = v;
     }
 
     public String getPhoneNumber(){
@@ -125,7 +154,11 @@ public class FancySignUpActivity extends FragmentActivity {
         return this.name;
     }
 
-    public int getPreference(){
-        return this.preference;
+    public View getPreference(){
+        if (this.preference == null){
+            return null;
+        } else {
+            return this.preference;
+        }
     }
 }

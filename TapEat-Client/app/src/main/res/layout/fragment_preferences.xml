@@ -10,7 +10,7 @@
         android:layout_alignParentTop="true"
         android:scaleType="centerCrop"
         android:contentDescription="background image"
-        android:src="@drawable/background_name" />
+        android:src="@drawable/background_preferences" />
 
     <RelativeLayout
         android:layout_width="fill_parent"
@@ -37,7 +37,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/preference_1"
+                    android:id="@+id/p_infrequent"
                     android:layout_gravity="center_horizontal"
                     android:textColor="#fff"
                     android:paddingTop="13dp"
@@ -51,7 +51,7 @@
                 <Button
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/preference_2"
+                    android:id="@+id/p_frequent"
                     android:layout_gravity="center_horizontal"
                     android:textColor="#fff"
                     android:paddingTop="13dp"

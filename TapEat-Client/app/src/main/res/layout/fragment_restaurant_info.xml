@@ -40,11 +40,11 @@
                 android:textColor="#ffffff" />
 
             <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Description"
-        android:id="@+id/RestaurantDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Description"
+                android:id="@+id/RestaurantDescription"
                 android:layout_marginLeft="10dp"
                 android:textColor="#000000"
                 android:textSize="14sp"
@@ -60,10 +60,10 @@
             android:layout_marginTop="20dp">
 
             <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Check in"
-        android:id="@+id/checkin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Check in"
+                android:id="@+id/checkin"
                 android:layout_below="@+id/view"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="20dp"

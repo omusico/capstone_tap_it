@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -41,18 +42,25 @@ public class phoneNumberStep extends Fragment {
             /* When focus is lost check that the text field
             * has valid values.
             */
-                if (!hasFocus) {
-                    ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
-                }
+            if (!hasFocus) {
+                ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
             }
+            }
+        });
+        v.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
+                return true;
+            };
         });
 
         ImageButton ib = (ImageButton) v.findViewById(R.id.action_next);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
-                pager.setCurrentItem(pager.getCurrentItem()+1);
+            ((FancySignUpActivity)getActivity()).setPhoneNumber(tv.getText().toString());
+            pager.setCurrentItem(pager.getCurrentItem()+1);
             }
         });
 
