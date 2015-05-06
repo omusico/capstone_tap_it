@@ -1,4 +1,4 @@
-package tapit.clientapp.activities;
+package tapit.clientapp.removeable;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -16,6 +16,8 @@ import com.parse.ParseException;
 import com.parse.ParseUser;
 
 import tapit.clientapp.R;
+import tapit.clientapp.activities.FancySignUpActivity;
+import tapit.clientapp.activities.MainActivity;
 
 public class LoginActivity extends ActionBarActivity {
 
@@ -32,7 +34,7 @@ public class LoginActivity extends ActionBarActivity {
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent signupActivity = new Intent(LoginActivity.this, SignUpActivity.class);
+                Intent signupActivity = new Intent(LoginActivity.this, FancySignUpActivity.class);
                 startActivity(signupActivity);
             }
         });

@@ -51,12 +51,8 @@
             android:label="@string/title_activity_check_in" >
         </activity>
         <activity
-            android:name=".activities.LoginActivity"
+            android:name=".removeable.LoginActivity"
             android:label="@string/title_activity_login" >
-        </activity>
-        <activity
-            android:name=".activities.SignUpActivity"
-            android:label="@string/title_activity_sign_up" >
         </activity>
         <activity
             android:name=".activities.FancySignUpActivity"
