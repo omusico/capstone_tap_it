@@ -2,7 +2,6 @@
 
 var React = require('react-native');
 var Theme = require('../style/theme');
-var Firebase = require('firebase-react-native');
 
 var {
   NavigatorIOS,
@@ -31,14 +30,6 @@ var TapEatNavigator = React.createClass({
   statics: {
     title: '<NavigatorIOS> - Custom',
     description: 'iOS navigation with custom nav bar colors',
-  },
-
-  componentWillMount: function() {
-    var restaurantId = "dtfSeattleUniversityVillage1";
-      var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
-      TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
-        console.log(snapshot.val());
-      });
   },
 
   render: function() {

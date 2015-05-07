@@ -7,6 +7,7 @@
 var React = require('react-native');
 var SlideMenu = require('./components/SlideMenu');
 var TapEatNavigator = require('./components/TapEatNavigator');
+var ReservationListView = require('./components/ReservationListView');
 
 var {
   AppRegistry,
@@ -21,8 +22,9 @@ var TapEat = React.createClass({
     render: function() {
         var date = new Date();
         return (
-          <View>
+          <View style={styles.layout}>
             <TapEatNavigator />
+            <ReservationListView />
           </View>
         );
     }
@@ -30,8 +32,9 @@ var TapEat = React.createClass({
 
 var styles = StyleSheet.create({
   layout: {
-    marginTop: 20,
-    backgroundColor: '#527FE4',
+    flexDirection: 'column',
+    alignItems: 'stretch',
+    justifyContent : 'space-between'
   },
   text: {
     color: '#FFFFFF'

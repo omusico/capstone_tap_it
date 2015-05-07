@@ -5,8 +5,6 @@ var React = require('react-native');
 var Theme = require('../style/theme');
 var Firebase = require('firebase-react-native');
 
-
-
 var {
     ListView,
     View,
@@ -15,7 +13,7 @@ var {
     Text
 } = React;
 
-var RservationListView = React.createClass({
+var ReservationListView = React.createClass({
     
     statics: {
         restaurantId: "dtfSeattleUniversityVillage1",
@@ -23,56 +21,36 @@ var RservationListView = React.createClass({
         description: "current waiting line for today's events"
     },
 
-    componentWillMount: function() {
-    },
+    _dataBlob: [],
 
     getInitialState: function() {
-
-        var getSectionData = (dataBlob, sectionID) => {
-          return dataBlob[sectionID];
-        };
-        var getRowData = (dataBlob, sectionID, rowID) => {
-          return dataBlob[rowID];
-        };
-        //genreate datasource
-        var dataSource = new ListView.DataSource({
-          getRowData: getRowData,
-          getSectionHeaderData: getSectionData,
-          rowHasChanged: (row1, row2) => row1 !== row2,
-          sectionHeaderHasChanged: (s1, s2) => s1 !== s2,
+        //Initialzie firebase, open up websocket
+        var that = this;
+        var restaurantId = "dtfSeattleUniversityVillage1";
+        var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
+        TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
+            that._processingReservations(snapshot);
         });
-
-        var dataBlob = {};
-        var sectionIDs = [];
-        var rowIDs = [];
-
-        var date = new Date();
-        var hour = date.getHours();
-        var sectionIndex = VCalUtil.getSecionIndexByHour(hour);
-
-        for (var ii = 0; ii < this._dayTimeDesc.length; ii++) {
-          var timeSection = this._dayTimeDesc[sectionIndex];
-          var sectionName = timeSection.title;
-          sectionIDs.push(sectionName);
-          dataBlob[sectionName] = sectionName;
-          var timeLots = VCalUtil.genrate30MinIntervalTimeStringsByHour(timeSection.startHour, timeSection.endHour);
-          rowIDs[ii] = timeLots;
-          for (var jj = 0; jj < timeLots.length; jj++) {
-              dataBlob[timeLots[jj]] = timeLots[jj];
-          };
-
-          //grab section from begining.
-          if(sectionIndex == this._dayTimeDesc.length - 1){
-            sectionIndex = 0;
-          }
-          sectionIndex++;
-        }
+        //genreate datasource
+        var dataSource = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
 
         return {
-          dataSource: dataSource.cloneWithRowsAndSections(dataBlob, sectionIDs, rowIDs),
-          headerPressCount: 0,
-          pressedRow: []
+          dataSource: dataSource.cloneWithRows(this._dataBlob)
         };
+    },
+
+    _processingReservations: function(snapshot: object){
+        this._dataBlob = [];
+        
+        if(snapshot){
+          var dataSource = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
+          var reservations = snapshot.val();
+          for(var key in reservations){
+            this._dataBlob.push(reservations[key]);  
+          }
+          console.log(this._dataBlob);
+          this.setState({dataSource: dataSource.cloneWithRows(this._dataBlob)});
+        }
     },
 
     render: function(){
@@ -82,27 +60,30 @@ var RservationListView = React.createClass({
                 dataSource={this.state.dataSource}
                 initialListSize={48}
                 renderRow={this._renderRow}
-                renderSectionHeader={this._renderSectionHeader}
                 >
-                </ListView>
+            </ListView>
+
         );
     },
 
-    _renderRow: function(rowData: string, sectionID: number, rowID: number) {
-        console.log(rowID);
+    _renderRow: function(rowData: object, sectionID: number, rowID: number) {
         return (
             <TouchableHighlight 
             onLongPress={() => this._pressRow(rowID)}
             onPressIn={() => this._pressRow(rowID)}
             underlayColor={Theme.primaryHeaderBackgroundColor}>
 
-                <View style={[styles.timelineSingleGrid, {backgroundColor: this.state.pressedRow[rowID] ? Theme.primaryContentBackgroundColor : "#ffffff"}]}
-                      {...this._panResponder.panHandlers}>
-
+                <View style={styles.timelineSingleGrid}>
                     <Text style={styles.text}>
-                        {rowData}
+                        {rowID}
                     </Text>
-                    <View style={rowID % 2 === 0 ? styles.separator : null} />
+                    <Text style={styles.text}>
+                        {rowData.customerName}
+                    </Text>
+                    <Text style={styles.text}>
+                        {rowData.partySize}
+                    </Text>
+                    <View style={styles.separator}  />
 
                 </View>
 
@@ -110,15 +91,6 @@ var RservationListView = React.createClass({
         );
     },
 
-    _renderSectionHeader: function(sectionData: string, sectionID: string) {
-        return (
-          <View style={styles.sectionHeader}>
-            <Text style={styles.sectionHeaderText}>
-              {sectionData}
-            </Text>
-          </View>
-        );
-    },
 
     _pressRow: function(rowID: number) {
         console.log("touched " + rowID +  "row");
@@ -127,31 +99,26 @@ var RservationListView = React.createClass({
 
 
 var styles = StyleSheet.create({
+    reservationId:{
+      justifyContent : 'space-between'
+    },
+
     timelineSingleGrid:{
         flexDirection: 'row',
-        flexWrap: 'nowrap',
-        alignItems: 'center',
+        flex: 1,
         paddingLeft: 5
     },
     separator: {
         height: 2,
-        flex: 1, 
         backgroundColor: Theme.primaryBorderColor
     },
     text: {
-        flex: 0,
+        flex: 1,
     },
     sectionHeaderText: {
         flex: 0,
         color: Theme.secondHeaderFontColor
-    },
-    sectionHeader: {
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'flex-start',
-        padding: 6,
-        backgroundColor: Theme.secondHeaderBackgroundColor
-    },
+    }
 });
 
-module.exports = RservationListView;
+module.exports = ReservationListView;
