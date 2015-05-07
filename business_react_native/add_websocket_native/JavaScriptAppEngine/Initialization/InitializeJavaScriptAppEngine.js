@@ -1,8 +1,22 @@
-
 /**
-  Put this file to:
-  node_module/react-natve/Libraries/JavaScriptAppEngine/Initialization/InitializeJavaScriptAppEngine.js
-
+ * Copyright (c) 2015-present, Facebook, Inc.
+ * All rights reserved.
+ *
+ * This source code is licensed under the BSD-style license found in the
+ * LICENSE file in the root directory of this source tree. An additional grant
+ * of patent rights can be found in the PATENTS file in the same directory.
+ *
+ * Sets up global variables typical in most JavaScript environments.
+ *
+ * 1. Global timers (via `setTimeout` etc).
+ * 2. Global console object.
+ * 3. Hooks for printing stack traces with source maps.
+ *
+ * Leaves enough room in the environment for implementing your own:
+ * 1. Require system.
+ * 2. Bridged modules.
+ *
+ * @providesModule InitializeJavaScriptAppEngine
  */
 
 /* eslint global-strict: 0 */
