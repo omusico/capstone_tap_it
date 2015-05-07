@@ -5,56 +5,25 @@ var React = require('react-native');
 var Theme = require('../style/theme');
 var Firebase = require('firebase-react-native');
 
+
+
 var {
     ListView,
     View,
     StyleSheet,
     TouchableHighlight,
-    PanResponder,
     Text
 } = React;
 
-var TimeLineListView = React.createClass({
+var RservationListView = React.createClass({
     
     statics: {
-        title: "Timeline View",
-        description: "time line for today's events"
+        restaurantId: "dtfSeattleUniversityVillage1",
+        title: "Rservation List View",
+        description: "current waiting line for today's events"
     },
-
-    _dayTimeDesc: VCalUtil.statics.dailyTimeSection,
-    _panResponder: {},
 
     componentWillMount: function() {
-      this._panResponder = PanResponder.create({
-        onStartShouldSetPanResponder: this._handleStartShouldSetPanResponder,
-        onMoveShouldSetPanResponder: this._handleMoveShouldSetPanResponder,
-        onPanResponderGrant: this._handlePanResponderGrant,
-        onPanResponderMove: this._handlePanResponderMove,
-        onPanResponderRelease: this._handlePanResponderEnd,
-        onPanResponderTerminate: this._handlePanResponderEnd,
-      });
-    },
-
-    _handleStartShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-    // Should we become active when the user presses down on the circle?
-      return true;
-    },
-
-    _handleMoveShouldSetPanResponder: function(e: Object, gestureState: Object): boolean {
-      // Should we become active when the user moves a touch over the circle?
-      return false;
-    },
-
-    _handlePanResponderGrant: function(e: Object, gestureState: Object) {
-      console.log("press grant");
-      console.log(e);
-      console.log(gestureState);
-    },
-    _handlePanResponderMove: function(e: Object, gestureState: Object) {
-      console.log("move")
-    },
-    _handlePanResponderEnd: function(e: Object, gestureState: Object) {
-      console.log("end")
     },
 
     getInitialState: function() {
@@ -185,4 +154,4 @@ var styles = StyleSheet.create({
     },
 });
 
-module.exports = TimeLineListView;
+module.exports = RservationListView;
