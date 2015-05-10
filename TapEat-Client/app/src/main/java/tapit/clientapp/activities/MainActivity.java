@@ -24,10 +24,12 @@ import android.widget.TextView;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
+import tapit.clientapp.model.APIRestaurant;
 import tapit.clientapp.utils.APITask;
 
 
@@ -45,7 +47,16 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new APITask().execute();
+        // Call Yelp API, wait for result to return and parsed (will block UI Thread while running)
+        // Data is stored in a list of APIRestaurant called result.
+        APITask yelpAPI = new APITask();
+        try {
+            //yelpAPI.execute("37.77493", "-122.419415").get();
+            List<APIRestaurant> result = yelpAPI.execute("37.77493", "-122.419415").get();
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
