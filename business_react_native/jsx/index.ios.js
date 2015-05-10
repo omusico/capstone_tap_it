@@ -35,9 +35,6 @@ var styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'stretch',
     justifyContent : 'space-between'
-  },
-  text: {
-    color: '#FFFFFF'
   }
 });
 
