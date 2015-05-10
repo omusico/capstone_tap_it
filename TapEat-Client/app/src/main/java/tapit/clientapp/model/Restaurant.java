@@ -28,7 +28,6 @@ public class Restaurant implements Serializable {
         this.number = "xxx-xxx-xxxx";
     }
 
-
     public Restaurant(String name, String uniqueUserName, int waittime, int image, double latitude, double longitude){
         this.name = name;
         this.uniqueUserName = uniqueUserName;
@@ -39,7 +38,6 @@ public class Restaurant implements Serializable {
         this.description = "taiwanese";
         this.number = "xxx-xxx-xxxx";
     }
-
 
     public String getUniqueUserName() {
         return uniqueUserName;

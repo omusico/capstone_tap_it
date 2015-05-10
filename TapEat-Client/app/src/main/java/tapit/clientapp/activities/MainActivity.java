@@ -28,6 +28,7 @@ import java.util.ArrayList;
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
+import tapit.clientapp.utils.APITask;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -40,10 +41,12 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private FragmentManager fragmentManager = getFragmentManager();
 
-
     ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        new APITask().execute();
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
