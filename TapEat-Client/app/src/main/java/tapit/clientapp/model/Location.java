@@ -31,6 +31,14 @@ public class Location {
         return zipCode;
     }
 
+    /*
+        Return all address information: street, city, state, ZIP code.
+        Format is a list of string with the following elements:
+            - first line of address
+            - second line of address (if applicable)
+            - neighborhood or crossing streets (if applicable)
+            - city/state/ZIP
+     */
     public List<String> getAddress() {
         return address;
     }
