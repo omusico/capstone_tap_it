@@ -54,13 +54,12 @@ public class RestaurantInfoActivity extends ActionBarActivity {
 
         // Set deafult text to checkin
         checkin = (Button) findViewById(R.id.checkin);
-        checkin.setText("check in");
 
         sharedPref = this.getSharedPreferences(Constants.SHAREDPREFERENCE_RESERVATION, MODE_PRIVATE);
         reservation = sharedPref.getString(thisRestaurant.getUniqueUserName(), null);
         if( reservation != null ){
             fire = new Firebase(reservation);
-            fire.addChildEventListener(new ChildEventListener() {
+            fire.getParent().addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
                 }
@@ -69,6 +68,8 @@ public class RestaurantInfoActivity extends ActionBarActivity {
                 public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
                     if (snapshot.getValue() != null){
                         checkin.setText("change of plan?");
+                    } else {
+                        checkin.setText("check in");
                     }
                 }
 

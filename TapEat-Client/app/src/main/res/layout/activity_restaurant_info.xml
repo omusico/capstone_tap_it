@@ -63,7 +63,7 @@
             <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="123"
+                android:text="Check in"
                 android:id="@+id/checkin"
                 android:layout_below="@+id/view"
                 android:layout_centerHorizontal="true"
