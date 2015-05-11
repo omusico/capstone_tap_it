@@ -1,6 +1,7 @@
 package tapit.clientapp.activities;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -10,21 +11,34 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.firebase.client.ChildEventListener;
+import com.firebase.client.DataSnapshot;
+import com.firebase.client.Firebase;
+import com.firebase.client.FirebaseError;
+import com.firebase.client.ValueEventListener;
+
 import tapit.clientapp.R;
 import tapit.clientapp.model.Restaurant;
+import tapit.clientapp.utils.Constants;
 
 
 public class RestaurantInfoActivity extends ActionBarActivity {
 
+    SharedPreferences sharedPref;
+    Button checkin;
+    Restaurant thisRestaurant;
+    String reservation;
+    Firebase fire;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_restaurant_info);
+        setContentView(R.layout.activity_restaurant_info);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent launchedMe = getIntent();
         Bundle restaurantBundle = launchedMe.getBundleExtra("restaurantBundle");
-        final Restaurant thisRestaurant = (Restaurant) restaurantBundle.getSerializable("serializedRestaurant");
+        thisRestaurant = (Restaurant) restaurantBundle.getSerializable("serializedRestaurant");
 
         TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
         setTitle(thisRestaurant.getName());
@@ -38,7 +52,40 @@ public class RestaurantInfoActivity extends ActionBarActivity {
         ImageView restaurantImage = (ImageView) findViewById(R.id.RestaurantImage);
         restaurantImage.setImageResource(thisRestaurant.getImage());
 
-        Button checkin = (Button) findViewById(R.id.checkin);
+        // Set deafult text to checkin
+        checkin = (Button) findViewById(R.id.checkin);
+        checkin.setText("check in");
+
+        sharedPref = this.getSharedPreferences(Constants.SHAREDPREFERENCE_RESERVATION, MODE_PRIVATE);
+        reservation = sharedPref.getString(thisRestaurant.getUniqueUserName(), null);
+        if( reservation != null ){
+            fire = new Firebase(reservation);
+            fire.addChildEventListener(new ChildEventListener() {
+                @Override
+                public void onChildAdded(DataSnapshot snapshot, String previousChildKey) {
+                }
+
+                @Override
+                public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
+                    if (snapshot.getValue() != null){
+                        checkin.setText("change of plan?");
+                    }
+                }
+
+                @Override
+                public void onChildRemoved(DataSnapshot snapshot) {
+                    checkin.setText("Check in");
+                }
+
+                @Override
+                public void onChildMoved(DataSnapshot snapshot, String string){
+                }
+
+                @Override
+                public void onCancelled(FirebaseError firebaseError) {
+                }
+            });
+        }
         checkin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,6 +96,7 @@ public class RestaurantInfoActivity extends ActionBarActivity {
                 startActivity(nextActivity);
             }
         });
+
     }
 
 
@@ -72,5 +120,28 @@ public class RestaurantInfoActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+
+        reservation = sharedPref.getString(thisRestaurant.getUniqueUserName(), null);
+        if (reservation != null) {
+            fire = new Firebase(reservation);
+            fire.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    if (snapshot.getValue() != null) {
+                        checkin.setText("change of plan?");
+                    }
+                }
+                @Override
+                public void onCancelled(FirebaseError error) {
+                }
+            });
+        } else {
+            checkin.setText("check in");
+        }
     }
 }

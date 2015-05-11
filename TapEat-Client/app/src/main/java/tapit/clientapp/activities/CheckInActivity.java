@@ -2,6 +2,7 @@ package tapit.clientapp.activities;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -16,14 +17,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import tapit.clientapp.model.Reservation;
-import tapit.clientapp.utils.Constants;
 import tapit.clientapp.R;
+import tapit.clientapp.model.Reservation;
 import tapit.clientapp.model.Restaurant;
 import tapit.clientapp.services.LocationService;
+import tapit.clientapp.utils.Constants;
 import tapit.clientapp.utils.DataPath;
 
 
@@ -37,7 +37,7 @@ public class CheckInActivity extends ActionBarActivity {
         Intent launchedMe = getIntent();
         final Restaurant restaurant = (Restaurant) launchedMe.getSerializableExtra("restaurant");
 
-//      Set page title
+        // Set page title
         setTitle(restaurant.getName());
 
         final EditText notes = (EditText) findViewById(R.id.notes);
@@ -60,6 +60,8 @@ public class CheckInActivity extends ActionBarActivity {
             gps.showSettingsAlert();
         }
 
+
+        // CheckIn Button
         final Button checkInButton = (Button) findViewById(R.id.checkin);
 
         final RadioGroup partySize = (RadioGroup) findViewById(R.id.partySize);
@@ -86,7 +88,17 @@ public class CheckInActivity extends ActionBarActivity {
 
                     //Firebase for sync up the list.
                     Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + restaurant.getUniqueUserName());
-                    fire.push().setValue(new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString()));
+                    Reservation current = new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString());
+
+                    Firebase reservation = fire.push();
+                    reservation.setValue(current);
+                    String reservationID = reservation.toString();
+
+                    // Store Firebase reference in sharedPref
+                    final SharedPreferences sharedPref = CheckInActivity.this.getSharedPreferences(Constants.SHAREDPREFERENCE_RESERVATION,Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPref.edit();
+                    editor.putString(restaurant.getUniqueUserName(), reservationID);
+                    editor.commit();
 
                     finish();
                 }
