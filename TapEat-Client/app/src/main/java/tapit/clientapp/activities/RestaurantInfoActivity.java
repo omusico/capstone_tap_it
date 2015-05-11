@@ -66,11 +66,6 @@ public class RestaurantInfoActivity extends ActionBarActivity {
 
                 @Override
                 public void onChildChanged(DataSnapshot snapshot, String previousChildKey) {
-                    if (snapshot.getValue() != null){
-                        checkin.setText("change of plan?");
-                    } else {
-                        checkin.setText("check in");
-                    }
                 }
 
                 @Override
