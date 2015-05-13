@@ -24,10 +24,12 @@ import android.widget.TextView;
 import com.parse.ParseUser;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
+import tapit.clientapp.model.APIRestaurant;
 import tapit.clientapp.utils.APITask;
 
 
@@ -45,7 +47,20 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        new APITask().execute();
+        /*
+            Yelp API call:
+                input: latitude & longitude (as String) of user's current location
+                return: list of API restaurants, see object's file for attributes & methods
+         */
+        try {
+            List<APIRestaurant> result = new APITask().execute("37.788022", "-122.399797").get();
+            System.out.println(result);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        //yelpdata.searchForBusinessesByLocation(47.6097, 122.3331);
+        //"37.788022,-122.399797";
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
