@@ -8,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import tapit.clientapp.ItemAdapter;
+import tapit.clientapp.utils.ItemAdapter;
 import tapit.clientapp.R;
 import tapit.clientapp.model.Restaurant;
 

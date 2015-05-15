@@ -63,7 +63,8 @@
             android:background="@drawable/submit"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:onClick=""/>
+            android:onClick=""
+            android:padding="50dp" />
     </RelativeLayout>
 
 </RelativeLayout>
