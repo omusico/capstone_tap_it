@@ -1,4 +1,4 @@
-package tapit.clientapp;
+package tapit.clientapp.utils;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import tapit.clientapp.R;
 import tapit.clientapp.activities.RestaurantInfoActivity;
 import tapit.clientapp.model.Restaurant;
 

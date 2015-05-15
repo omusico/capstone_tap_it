@@ -2,24 +2,18 @@ package tapit.clientapp.activities;
 
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -29,6 +23,8 @@ import java.util.List;
 import tapit.clientapp.R;
 import tapit.clientapp.fragments.PreferencesFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
+import tapit.clientapp.hamburger_menu.DrawerListAdapter;
+import tapit.clientapp.hamburger_menu.NavItem;
 import tapit.clientapp.model.APIRestaurant;
 import tapit.clientapp.utils.APITask;
 
@@ -68,9 +64,10 @@ public class MainActivity extends ActionBarActivity {
         //show hamburger menu
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        mNavItems.add(new NavItem("Nearby Restaurants", "Search nearby restaurants", R.drawable.logo));
-        mNavItems.add(new NavItem("Preferences", "Change your preferences", R.drawable.logo));
-        mNavItems.add(new NavItem("About", "Get to know about us", R.drawable.logo));
+        mNavItems.add(new NavItem("Nearby Restaurants"));
+        mNavItems.add(new NavItem("Wait Line Status"));
+        mNavItems.add(new NavItem("Favourites"));
+        mNavItems.add(new NavItem("Recent Visited"));
 
         // DrawerLayout
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawerLayout);
@@ -181,7 +178,7 @@ public class MainActivity extends ActionBarActivity {
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
-        setTitle(mNavItems.get(position).mTitle);
+        setTitle(mNavItems.get(position).getTitle());
 
         // Close the drawer
         mDrawerLayout.closeDrawer(mDrawerPane);
@@ -212,67 +209,6 @@ public class MainActivity extends ActionBarActivity {
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
-    }
-
-    class NavItem {
-        String mTitle;
-        String mSubtitle;
-        int mIcon;
-
-        public NavItem(String title, String subtitle, int icon) {
-            mTitle = title;
-            mSubtitle = subtitle;
-            mIcon = icon;
-        }
-    }
-
-    class DrawerListAdapter extends BaseAdapter {
-
-        Context mContext;
-        ArrayList<NavItem> mNavItems;
-
-        public DrawerListAdapter(Context context, ArrayList<NavItem> navItems) {
-            mContext = context;
-            mNavItems = navItems;
-        }
-
-        @Override
-        public int getCount() {
-            return mNavItems.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return mNavItems.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            View view;
-
-            if (convertView == null) {
-                LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                view = inflater.inflate(R.layout.drawer_item, null);
-            }
-            else {
-                view = convertView;
-            }
-
-            TextView titleView = (TextView) view.findViewById(R.id.title);
-            TextView subtitleView = (TextView) view.findViewById(R.id.subTitle);
-            ImageView iconView = (ImageView) view.findViewById(R.id.icon);
-
-            titleView.setText( mNavItems.get(position).mTitle );
-            subtitleView.setText( mNavItems.get(position).mSubtitle );
-            iconView.setImageResource(mNavItems.get(position).mIcon);
-
-            return view;
-        }
     }
 
     public void setActionBarTitle(String title) {
