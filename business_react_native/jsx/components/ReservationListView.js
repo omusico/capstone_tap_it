@@ -99,9 +99,6 @@ var ReservationListView = React.createClass({
 
 
 var styles = StyleSheet.create({
-    reservationId:{
-      justifyContent : 'space-between'
-    },
 
     timelineSingleGrid:{
         flexDirection: 'row',
