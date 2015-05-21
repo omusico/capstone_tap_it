@@ -1,11 +1,12 @@
 package tapit.clientapp.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Luan on 5/2/15.
  */
-public class Location {
+public class Location implements Serializable{
     private List<String> address;
     private String city;
     private String stateCode;

@@ -15,12 +15,18 @@ import android.os.IBinder;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.GoogleApiClient.ConnectionCallbacks;
+import com.google.android.gms.common.api.GoogleApiClient.OnConnectionFailedListener;
+import com.google.android.gms.location.LocationServices;
+
 import java.util.List;
 
 /**
  * Created by frank on 3/12/15.
  */
-public class LocationService extends Service implements LocationListener {
+public class LocationService extends Service implements LocationListener,
+        ConnectionCallbacks, OnConnectionFailedListener {
     private final Context mContext;
 
     // flag for GPS status
@@ -45,11 +51,26 @@ public class LocationService extends Service implements LocationListener {
     // Declaring a Location Manager
     protected LocationManager locationManager;
 
+    // Declaring last GoogleApiClient
+    GoogleApiClient mGoogleApiClient;
+
+    // Declaring last known location
+    private Location mLastLocation;
+
     public LocationService(Context context) {
         this.latitude = Double.NaN;
         this.longitude = Double.NaN;
         this.mContext = context;
         getLocation();
+        buildGoogleApiClient();
+    }
+
+    protected synchronized void buildGoogleApiClient() {
+        mGoogleApiClient = new GoogleApiClient.Builder(mContext)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
     }
 
     public Location getLocation() {
@@ -79,6 +100,9 @@ public class LocationService extends Service implements LocationListener {
                     if (locationManager != null) {
                         location = locationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+                        mLastLocation = LocationServices.FusedLocationApi.getLastLocation(
+                                mGoogleApiClient);
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
@@ -97,6 +121,11 @@ public class LocationService extends Service implements LocationListener {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
                             if (location != null) {
+                                latitude = location.getLatitude();
+                                longitude = location.getLongitude();
+                            } else {
+                                location = LocationServices.FusedLocationApi.getLastLocation(
+                                        mGoogleApiClient);
                                 latitude = location.getLatitude();
                                 longitude = location.getLongitude();
                             }
@@ -278,5 +307,17 @@ public class LocationService extends Service implements LocationListener {
         public int compareTo(GeoPoint another) {
             return 0;
         }
+    }
+
+    @Override
+    public void onConnectionFailed(com.google.android.gms.common.ConnectionResult connectionResult) {
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
     }
 }

@@ -16,14 +16,13 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import tapit.clientapp.model.Reservation;
-import tapit.clientapp.utils.Constants;
 import tapit.clientapp.R;
-import tapit.clientapp.model.Restaurant;
+import tapit.clientapp.model.APIRestaurant;
+import tapit.clientapp.model.Reservation;
 import tapit.clientapp.services.LocationService;
+import tapit.clientapp.utils.Constants;
 import tapit.clientapp.utils.DataPath;
 
 
@@ -35,7 +34,7 @@ public class CheckInActivity extends ActionBarActivity {
         setContentView(R.layout.activity_check_in);
 
         Intent launchedMe = getIntent();
-        final Restaurant restaurant = (Restaurant) launchedMe.getSerializableExtra("restaurant");
+        final APIRestaurant restaurant = (APIRestaurant) launchedMe.getSerializableExtra("restaurant");
 
 //      Set page title
         setTitle(restaurant.getName());
