@@ -3,12 +3,14 @@ package tapit.clientapp.fragments.sign_up_wizard;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.View.OnFocusChangeListener;
+import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 
 import tapit.clientapp.R;
@@ -43,7 +45,19 @@ public class nameStep extends Fragment {
             }
         });
 
-        ImageButton ib = (ImageButton) v.findViewById(R.id.action_next);
+        // Set keyboard action when user press done
+        tv.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_DONE) {
+                    ((FancySignUpActivity)getActivity()).setCustomerName(tv.getText().toString());
+                    pager.setCurrentItem(pager.getCurrentItem()+1);
+                }
+                return false;
+            }
+        });
+
+        Button ib = (Button) v.findViewById(R.id.action_next);
         ib.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
