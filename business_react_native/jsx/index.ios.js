@@ -8,6 +8,7 @@ var React = require('react-native');
 var SlideMenu = require('./components/SlideMenu');
 var TapEatNavigator = require('./components/TapEatNavigator');
 var ReservationListView = require('./components/ReservationListView');
+var GetInLineForm = require('./components/GetInLineForm');
 
 var {
   AppRegistry,
@@ -69,7 +70,7 @@ var TapEat = React.createClass({
           <View style={styles.layout}>
             <View style={styles.signInView}>
               <NavBar />
-              <SignInBox />
+              <GetInLineForm />
             </View>
 
             <View style={styles.checkInView}>
@@ -84,7 +85,6 @@ var styles = StyleSheet.create({
   layout: {
     flexDirection: 'row',
     flex: 1
-
   },
   signInView: {
     backgroundColor: 'grey', 
