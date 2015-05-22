@@ -21,47 +21,19 @@ var {
 } = React;
 
 var NavBar = React.createClass({
-  render: function() {
-    return(
 
+  render: function() {
+    
+    return(
         <View style={styles.navBar}>
           <Text style={styles.signInTitle}>
               Sign In
           </Text>
         </View>
-
     )
   }
 });
 
-var SignInBox = React.createClass({
-  getInitialState: function() {
-     return {firstName:'',
-            lastName: '',
-            number: ''
-      };
-  },
-  render: function() {
-    return(
-      <View style={styles.signInBox}>
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({firstName: text})}
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({lastName: text})}
-        />
-        <TextInput
-          style={{height: 40, borderColor: 'gray', borderWidth: 1}}
-          onChangeText={(text) => this.setState({number: text})}
-        />
-      </View>
-
-
-    )
-  }
-});
 
 var TapEat = React.createClass({
     render: function() {

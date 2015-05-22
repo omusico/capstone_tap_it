@@ -18,10 +18,7 @@ var ListPage = React.createClass({
   render: function() {
       return (
         <View style={styles.ListPage}>
-
-
           <ReservationListView />
-
         </View>
       );
     },

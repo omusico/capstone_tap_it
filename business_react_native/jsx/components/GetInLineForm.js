@@ -4,6 +4,8 @@
 var React = require('react-native');
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
+var Firebase = require('firebase-react-native');
+
 
 
 var {
@@ -17,20 +19,36 @@ var {
 // here we are: define your domain model
 var Person = t.struct({
   firstName: t.Str,              // a required string
-  lastName: t.Str,  // an optional string
+  lastName: t.Str,
+  howManyPeople: t.Num,  			// an optional string using t.maybe(t.str)
   phone: t.Num,               // a required number
-  rememberMe: t.Bool        // a boolean
+  preference: t.maybe(t.Str)
 });
 
 var options = {}; // optional rendering options (see documentation)
 
+
 var GetInLineForm = React.createClass({
 
+	statics: {
+        restaurantId: "dtfSeattleUniversityVillage1" //this value can be filled by parse.
+    },
+
   onPress: function () {
-    // call getValue() to get the values of the form
+
+  	var restaurantId = "dtfSeattleUniversityVillage1";  //this value can be filled by parse.
     var value = this.refs.form.getValue();
     if (value) { // if validation fails, value will be null
       console.log(value); // value here is an instance of Person
+  		var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
+  		TapEatFireBase.child("reservations/" + restaurantId).push({
+  			customerName: value.firstName + " " + value.lastName,
+ 			customerPhone: value.phone,
+			customerUsername: value.firstName + value.lastName,
+			partySize: value.howManyPeople,
+			peference: value.preference,
+			restaurantName: restaurantId
+  		});
     }
   },
 
