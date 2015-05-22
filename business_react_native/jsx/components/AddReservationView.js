@@ -5,8 +5,6 @@ var React = require('react-native');
 
 var {
   StyleSheet,
-  Text,
-  TextInput,
   View,
 } = React;
 

@@ -10,7 +10,8 @@ var {
     View,
     StyleSheet,
     TouchableHighlight,
-    Text
+    Text,
+    PixelRatio
 } = React;
 
 var ReservationListView = React.createClass({
@@ -68,12 +69,13 @@ var ReservationListView = React.createClass({
 
     _renderRow: function(rowData: object, sectionID: number, rowID: number) {
         return (
+            <View>
             <TouchableHighlight 
             onLongPress={() => this._pressRow(rowID)}
             onPressIn={() => this._pressRow(rowID)}
             underlayColor={Theme.primaryHeaderBackgroundColor}>
 
-                <View style={styles.timelineSingleGrid}>
+                <View style={styles.row}>
                     <Text style={styles.text}>
                         {rowID}
                     </Text>
@@ -88,6 +90,8 @@ var ReservationListView = React.createClass({
                 </View>
 
             </TouchableHighlight>
+            <View style={styles.cellBorder} />
+            </View>
         );
     },
 
@@ -99,6 +103,9 @@ var ReservationListView = React.createClass({
 
 
 var styles = StyleSheet.create({
+    reservationId:{
+      justifyContent : 'space-between'
+    },
 
     timelineSingleGrid:{
         flexDirection: 'row',
@@ -115,7 +122,19 @@ var styles = StyleSheet.create({
     sectionHeaderText: {
         flex: 0,
         color: Theme.secondHeaderFontColor
-    }
+    },
+      row: {
+        alignItems: 'center',
+        backgroundColor: 'white',
+        flexDirection: 'row',
+        padding: 5,
+      },
+        cellBorder: {
+    backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    // Trick to get the thinest line the device can display
+    height: 1 / PixelRatio.get(),
+    marginLeft: 4,
+  },
 });
 
 module.exports = ReservationListView;

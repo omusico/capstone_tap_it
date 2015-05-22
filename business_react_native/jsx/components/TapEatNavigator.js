@@ -2,6 +2,8 @@
 
 var React = require('react-native');
 var Theme = require('../style/theme');
+var ReservationListView = require('./ReservationListView');
+
 
 var {
   NavigatorIOS,
@@ -11,14 +13,15 @@ var {
   View
 } = React;
 
-var EmptyPage = React.createClass({
+var ListPage = React.createClass({
 
   render: function() {
       return (
-        <View style={styles.emptyPage}>
-          <Text style={styles.emptyPageText}>
-            {this.props.text}
-          </Text>
+        <View style={styles.ListPage}>
+
+
+          <ReservationListView />
+
         </View>
       );
     },
@@ -40,7 +43,7 @@ var TapEatNavigator = React.createClass({
       <NavigatorIOS
         style={styles.container}
         initialRoute={{
-          component: EmptyPage,
+          component: ListPage,
           title: "Ding Tai Feng",
           rightButtonTitle: 'Done',
           onRightButtonPress: () => {
@@ -62,12 +65,12 @@ var styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  emptyPage: {
+  ListPage: {
     flex: 1,
-    paddingTop: 64,
   },
-  emptyPageText: {
-    margin: 10,
+  ListPageText: {
+    alignSelf: 'center',
+    marginTop: 10
   },
 });
 
