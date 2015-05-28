@@ -76,14 +76,12 @@ var ReservationListView = React.createClass({
             underlayColor={Theme.primaryHeaderBackgroundColor}>
 
                 <View style={styles.row}>
-                    <Text style={styles.text}>
-                        {rowID}
-                    </Text>
-                    <Text style={styles.text}>
+
+                    <Text style={styles.partyName}>
                         {rowData.customerName}
                     </Text>
-                    <Text style={styles.text}>
-                        {rowData.partySize}
+                    <Text style={styles.partySize}>
+                        {rowData.partySize} people
                     </Text>
                     <View style={styles.separator}  />
 
@@ -120,20 +118,25 @@ var styles = StyleSheet.create({
         height: 2,
         backgroundColor: Theme.primaryBorderColor
     },
-    text: {
-        flex: 1,
-    },
+
     sectionHeaderText: {
         flex: 0,
         color: Theme.secondHeaderFontColor
     },
-      row: {
+    row: {
         alignItems: 'center',
         backgroundColor: 'white',
         flexDirection: 'row',
-        padding: 5,
-      },
-        cellBorder: {
+        padding: 20,
+        justifyContent: 'space-around' 
+    },
+    partyName: {
+        flex: 4
+    },
+    partySize: {
+        flex: 1
+    },
+    cellBorder: {
     backgroundColor: 'rgba(0, 0, 0, 0.1)',
     // Trick to get the thinest line the device can display
     height: 1 / PixelRatio.get(),

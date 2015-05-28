@@ -96,6 +96,7 @@ var GetInLineForm = React.createClass({
           ref="form"
           type={Person}
           options={options}
+          style={styles.form}
         />
         <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Save</Text>
@@ -107,12 +108,15 @@ var GetInLineForm = React.createClass({
 
 
 var styles = StyleSheet.create({
+
   waitTime: {
     alignSelf: 'center',
     justifyContent: 'center',
     color: '#15D3A4'
   },
   circle: {
+    marginTop: 20,
+    marginBottom: 20,
     borderRadius: 100,
     borderWidth: 10,
     borderColor: '#15D3A4',
@@ -123,8 +127,7 @@ var styles = StyleSheet.create({
   },
   container: {
     flex: 0.93,
-
-    backgroundColor: '#ffffff',
+    backgroundColor: '#F8F8F8'
   },
   title: {
     fontSize: 30,

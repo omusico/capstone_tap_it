@@ -62,12 +62,11 @@ var styles = StyleSheet.create({
   signInView: {
     backgroundColor: 'grey', 
     flex: 0.3,
-    borderRightColor: '#151515',
+    borderColor: '#909090',
     borderRightWidth: 0.5
  
   },
   checkInView: {
-    backgroundColor: 'white',
     flex: 0.5,
   },
 
@@ -77,7 +76,9 @@ var styles = StyleSheet.create({
   },
   navBar: {
     backgroundColor: '#E9EAED',
-    flex: 0.05
+    flex: 0.05,
+    borderBottomWidth: 0.5,
+    borderColor: '#909090'
   }
 
 });
