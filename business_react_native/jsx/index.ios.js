@@ -27,7 +27,7 @@ var NavBar = React.createClass({
     return(
         <View style={styles.navBar}>
           <Text style={styles.signInTitle}>
-              Sign In
+              {this.props.title}
           </Text>
         </View>
     )
@@ -41,12 +41,13 @@ var TapEat = React.createClass({
         return (
           <View style={styles.layout}>
             <View style={styles.signInView}>
-              <NavBar />
+              <NavBar title="Sign In" />
               <GetInLineForm />
             </View>
 
             <View style={styles.checkInView}>
-              <TapEatNavigator />
+              <NavBar title="Wait List" />
+              <ReservationListView />
             </View>
           </View>
         );
@@ -60,11 +61,14 @@ var styles = StyleSheet.create({
   },
   signInView: {
     backgroundColor: 'grey', 
-    flex: 0.3
+    flex: 0.3,
+    borderRightColor: '#151515',
+    borderRightWidth: 0.5
+ 
   },
   checkInView: {
-    backgroundColor: 'red',
-     flex: 0.5
+    backgroundColor: 'white',
+    flex: 0.5,
   },
 
   signInTitle: {
@@ -72,13 +76,10 @@ var styles = StyleSheet.create({
     marginTop: 20
   },
   navBar: {
-    backgroundColor: 'green',
-    flex: 0.07
-  },
-  signInBox: {
-    backgroundColor: 'orange',
-    flex: 0.94
+    backgroundColor: '#E9EAED',
+    flex: 0.05
   }
+
 });
 
 AppRegistry.registerComponent('business_react_native', () => TapEat);

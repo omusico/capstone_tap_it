@@ -56,7 +56,7 @@ var ReservationListView = React.createClass({
 
     render: function(){
         return(
-            <ListView
+            <ListView style={styles.listView}
                 bounces={false}
                 dataSource={this.state.dataSource}
                 initialListSize={48}
@@ -103,6 +103,10 @@ var ReservationListView = React.createClass({
 
 
 var styles = StyleSheet.create({
+    listView: {
+        flex: 0.93,
+        backgroundColor: 'white'
+    },
     reservationId:{
       justifyContent : 'space-between'
     },

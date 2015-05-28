@@ -81,13 +81,17 @@ var GetInLineForm = React.createClass({
   render: function() {
     return (
       <View style={styles.container}>
-        {/* display */}
-        <Text>
-          Current Wait Time
-        </Text>
-        <Text>
-          {this.state.data.length} minutes
-        </Text>
+
+        <View style={styles.circle}>
+          <Text style={styles.waitTime}>
+            {this.state.data.length} minutes
+          </Text>
+          <Text style={styles.waitTime}>
+            Estimated Wait Time
+          </Text>
+        </View>
+
+        
         <Form
           ref="form"
           type={Person}
@@ -103,9 +107,23 @@ var GetInLineForm = React.createClass({
 
 
 var styles = StyleSheet.create({
+  waitTime: {
+    alignSelf: 'center',
+    justifyContent: 'center',
+    color: '#15D3A4'
+  },
+  circle: {
+    borderRadius: 100,
+    borderWidth: 10,
+    borderColor: '#15D3A4',
+    width: 150,
+    height: 150,
+    alignSelf: 'center',
+    justifyContent: 'center'
+  },
   container: {
     flex: 0.93,
-    padding: 20,
+
     backgroundColor: '#ffffff',
   },
   title: {
