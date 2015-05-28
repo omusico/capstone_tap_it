@@ -16,14 +16,16 @@ import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.firebase.client.Firebase;
-import com.parse.ParseObject;
 import com.parse.ParseUser;
 
-import tapit.clientapp.model.Reservation;
-import tapit.clientapp.utils.Constants;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import tapit.clientapp.R;
+import tapit.clientapp.model.Reservation;
 import tapit.clientapp.model.Restaurant;
 import tapit.clientapp.services.LocationService;
+import tapit.clientapp.utils.Constants;
 import tapit.clientapp.utils.DataPath;
 
 
@@ -86,7 +88,7 @@ public class CheckInActivity extends ActionBarActivity {
 
                     //Firebase for sync up the list.
                     Firebase fire = new Firebase(Constants.FIREBASE_URL + '/' + DataPath.RESERVATIONS + '/' + restaurant.getUniqueUserName());
-                    fire.push().setValue(new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString()));
+                    fire.push().setValue(new Reservation(restaurant.getName(), size, notes.getText().toString(), customerName, username, currentUser.get("phone").toString(), new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date())));
 
                     finish();
                 }
