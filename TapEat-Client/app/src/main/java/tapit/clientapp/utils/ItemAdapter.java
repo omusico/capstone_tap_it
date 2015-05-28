@@ -10,17 +10,19 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import tapit.clientapp.R;
 import tapit.clientapp.activities.RestaurantInfoActivity;
-import tapit.clientapp.model.Restaurant;
+import tapit.clientapp.model.APIRestaurant;
 
 
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
-    private Restaurant[] dataSource;
+    private List<APIRestaurant> dataSource;
     private Context _context;
 
-    public ItemAdapter(Restaurant[] dataArgs, Context context){
+    public ItemAdapter(List<APIRestaurant> dataArgs, Context context){
         dataSource = dataArgs;
         _context = context;
     }
@@ -37,15 +39,16 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(ViewHolder holder, final int position) {
-        holder.RestaurantName.setText(dataSource[position].getName());
-        holder.wait_time.setText(dataSource[position].getWaitTime());
-        holder.RestaurantImage.setImageResource(dataSource[position].getImage());
+        holder.RestaurantName.setText(dataSource.get(position).getName());
+        holder.wait_time.setText(dataSource.get(position).getWaitTime());
+
+        holder.RestaurantImage.setImageResource(dataSource.get(position).getImage());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent nextActivity = new Intent(v.getContext(),RestaurantInfoActivity.class);
-                Restaurant selectedRestaurant = dataSource[position];
+                APIRestaurant selectedRestaurant = dataSource.get(position);
                 Bundle restaurantBundle = new Bundle();
                 restaurantBundle.putSerializable("serializedRestaurant", selectedRestaurant);
                 nextActivity.putExtra("restaurantBundle", restaurantBundle);
@@ -58,7 +61,7 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return dataSource.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder{

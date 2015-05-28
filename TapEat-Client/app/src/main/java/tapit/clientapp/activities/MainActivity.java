@@ -3,6 +3,7 @@ package tapit.clientapp.activities;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 
 import com.parse.ParseUser;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +28,7 @@ import tapit.clientapp.fragments.RestaurantListFragment;
 import tapit.clientapp.hamburger_menu.DrawerListAdapter;
 import tapit.clientapp.hamburger_menu.NavItem;
 import tapit.clientapp.model.APIRestaurant;
+import tapit.clientapp.services.LocationService;
 import tapit.clientapp.utils.APITask;
 
 
@@ -37,9 +40,15 @@ public class MainActivity extends ActionBarActivity {
     RelativeLayout mDrawerPane;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
+    private ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
     private FragmentManager fragmentManager = getFragmentManager();
 
-    ArrayList<NavItem> mNavItems = new ArrayList<NavItem>();
+    // Current user location
+    private Location currentLocation;
+
+    // Yelp API restaurant list
+    List<APIRestaurant> result;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -49,21 +58,74 @@ public class MainActivity extends ActionBarActivity {
                 return: list of API restaurants, see object's file for attributes & methods
          */
         try {
-            List<APIRestaurant> result = new APITask().execute("37.788022", "-122.399797").get();
-            System.out.println(result);
+            getLocation();
+            if (currentLocation != null) {
+                result = new APITask().execute(String.valueOf(currentLocation.getLatitude()), String.valueOf(currentLocation.getLongitude())).get();
+            }
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
-        //yelpdata.searchForBusinessesByLocation(47.6097, 122.3331);
-        //"37.788022,-122.399797";
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //show hamburger menu
+        //show hamburger menu & initialize drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        drawerHelp();
 
+        // Check if current user is logged in, else direct to login page
+        // if logged in, inflate restaurant list fragment
+        ParseUser currentUser = ParseUser.getCurrentUser();
+        if (currentUser != null) {
+            RestaurantListFragment newFragment = new RestaurantListFragment();
+
+            Bundle args = new Bundle();
+            args.putSerializable("searchResult", (Serializable)result);
+            newFragment.setArguments(args);
+
+            fragmentManager.beginTransaction()
+                    .replace(R.id.mainContent, newFragment)
+                    .commit();
+        } else {
+            Intent loginActivity = new Intent(MainActivity.this, FancySignUpActivity.class);
+            startActivity(loginActivity);
+            finish();
+        }
+    }
+
+    /*
+    * Handle back navigation on fragments
+    * */
+    @Override
+    public void onBackPressed(){
+        if (fragmentManager.getBackStackEntryCount() > 0) {
+            Log.i("MainActivity", "popping backstack");
+            fragmentManager.popBackStack();
+        } else {
+            Log.i("MainActivity", "nothing on backstack, calling super");
+            super.onBackPressed();
+        }
+    }
+
+    private void setActionBarTitle(String title) {
+        getSupportActionBar().setTitle(title);
+    }
+
+    private void getLocation(){
+        // create class object
+        LocationService gps = new LocationService(MainActivity.this);
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+            currentLocation = gps.getLocation();
+        }else{
+            // can't get location
+            // GPS or Network is not enabled
+            // Ask user to enable GPS/network in settings
+            gps.showSettingsAlert();
+        }
+    }
+
+    private void drawerHelp(){
         mNavItems.add(new NavItem("Nearby Restaurants"));
         mNavItems.add(new NavItem("Wait Line Status"));
         mNavItems.add(new NavItem("Favourites"));
@@ -116,34 +178,6 @@ public class MainActivity extends ActionBarActivity {
                 selectItemFromDrawer(position);
             }
         });
-
-        // Check if current user is logged in, else direct to login page
-        // if logged in, inflate restaurant list fragment
-        ParseUser currentUser = ParseUser.getCurrentUser();
-        if (currentUser != null) {
-            // do stuff with the user
-            fragmentManager.beginTransaction()
-                    .replace(R.id.mainContent, new RestaurantListFragment())
-                    .commit();
-        } else {
-            Intent loginActivity = new Intent(MainActivity.this, FancySignUpActivity.class);
-            startActivity(loginActivity);
-            finish();
-        }
-    }
-
-    /*
-    * Handle back navigation on fragments
-    * */
-    @Override
-    public void onBackPressed(){
-        if (fragmentManager.getBackStackEntryCount() > 0) {
-            Log.i("MainActivity", "popping backstack");
-            fragmentManager.popBackStack();
-        } else {
-            Log.i("MainActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
-        }
     }
 
     // Called when invalidateOptionsMenu() is invoked
@@ -210,9 +244,4 @@ public class MainActivity extends ActionBarActivity {
         super.onPostCreate(savedInstanceState);
         mDrawerToggle.syncState();
     }
-
-    public void setActionBarTitle(String title) {
-        getSupportActionBar().setTitle(title);
-    }
-
 }

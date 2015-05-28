@@ -10,8 +10,10 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.List;
+
 import tapit.clientapp.R;
-import tapit.clientapp.model.Restaurant;
+import tapit.clientapp.model.APIRestaurant;
 
 
 public class RestaurantInfoActivity extends ActionBarActivity {
@@ -24,16 +26,22 @@ public class RestaurantInfoActivity extends ActionBarActivity {
 
         Intent launchedMe = getIntent();
         Bundle restaurantBundle = launchedMe.getBundleExtra("restaurantBundle");
-        final Restaurant thisRestaurant = (Restaurant) restaurantBundle.getSerializable("serializedRestaurant");
+        final APIRestaurant thisRestaurant = (APIRestaurant) restaurantBundle.getSerializable("serializedRestaurant");
 
         TextView restaurantName = (TextView) findViewById(R.id.RestaurantName);
         setTitle(thisRestaurant.getName());
 
+        // Get restaurant type
         TextView restaurantDescription = (TextView) findViewById(R.id.RestaurantDescription);
-        restaurantDescription.setText(thisRestaurant.getDescription());
+        List<String> categories = thisRestaurant.getCategories();
+        String categoriesDec = categories.get(0);
+        restaurantDescription.setText(categoriesDec);
 
         TextView restaurantWaitTime = (TextView) findViewById(R.id.RestaurantWaitTime);
         restaurantWaitTime.setText(thisRestaurant.getWaitTime());
+
+        TextView restaurantDistance = (TextView) findViewById(R.id.Restaurantdistance);
+        restaurantDistance.setText(thisRestaurant.getDistance());
 
         ImageView restaurantImage = (ImageView) findViewById(R.id.RestaurantImage);
         restaurantImage.setImageResource(thisRestaurant.getImage());
