@@ -45,14 +45,14 @@ var GetInLineForm = React.createClass({
     },
 
     _processingReservations: function(snapshot: object){
-        
+        var tempData = [];
         if(snapshot){
           // var dataSource = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
           var reservations = snapshot.val();
           for(var key in reservations){
-            this.state.data.push(reservations[key]);  
+            tempData.push(reservations[key]);  
           }
-          this.setState({data: this.state.data});
+          this.setState({data: tempData});
         }
     },
 
