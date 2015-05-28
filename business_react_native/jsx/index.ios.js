@@ -73,7 +73,7 @@ var styles = StyleSheet.create({
   },
   navBar: {
     backgroundColor: 'green',
-    flex: 0.06
+    flex: 0.07
   },
   signInBox: {
     backgroundColor: 'orange',

@@ -30,6 +30,32 @@ var options = {}; // optional rendering options (see documentation)
 
 var GetInLineForm = React.createClass({
 
+    getInitialState: function() {
+        //Initialzie firebase, open up websocket
+        var that = this;
+        var restaurantId = "dtfSeattleUniversityVillage1";
+        var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
+        TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
+            that._processingReservations(snapshot);
+        });
+        //genreate datasource
+        return {
+          data: []
+        };
+    },
+
+    _processingReservations: function(snapshot: object){
+        
+        if(snapshot){
+          // var dataSource = new ListView.DataSource({ rowHasChanged: (row1, row2) => row1 !== row2 });
+          var reservations = snapshot.val();
+          for(var key in reservations){
+            this.state.data.push(reservations[key]);  
+          }
+          this.setState({data: this.state.data});
+        }
+    },
+
 	statics: {
         restaurantId: "dtfSeattleUniversityVillage1" //this value can be filled by parse.
     },
@@ -56,6 +82,12 @@ var GetInLineForm = React.createClass({
     return (
       <View style={styles.container}>
         {/* display */}
+        <Text>
+          Current Wait Time
+        </Text>
+        <Text>
+          {this.state.data.length} minutes
+        </Text>
         <Form
           ref="form"
           type={Person}
@@ -72,7 +104,7 @@ var GetInLineForm = React.createClass({
 
 var styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    flex: 0.93,
     padding: 20,
     backgroundColor: '#ffffff',
   },

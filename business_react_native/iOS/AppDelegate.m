@@ -9,7 +9,7 @@
 
 #import "AppDelegate.h"
 
-#import "RCTRootView.h"
+#import   "RCTRootView.h"
 
 @implementation AppDelegate
 
