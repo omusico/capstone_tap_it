@@ -22,10 +22,11 @@ var Person = t.struct({
   lastName: t.Str,
   howManyPeople: t.Num,  			// an optional string using t.maybe(t.str)
   phone: t.Num,               // a required number
-  preference: t.maybe(t.Str)
 });
 
-var options = {}; // optional rendering options (see documentation)
+var options = {
+  auto: 'placeholders'
+}; // optional rendering options (see documentation)
 
 
 var GetInLineForm = React.createClass({
@@ -72,7 +73,6 @@ var GetInLineForm = React.createClass({
  			customerPhone: value.phone,
 			customerUsername: value.firstName + value.lastName,
 			partySize: value.howManyPeople,
-			peference: value.preference,
 			restaurantName: restaurantId
   		});
     }
@@ -84,22 +84,23 @@ var GetInLineForm = React.createClass({
 
         <View style={styles.circle}>
           <Text style={styles.waitTime}>
-            {this.state.data.length} minutes
+            <Text style={styles.minute}>{this.state.data.length}</Text> minutes
           </Text>
           <Text style={styles.waitTime}>
             Estimated Wait Time
           </Text>
         </View>
 
-        
-        <Form
-          ref="form"
-          type={Person}
-          options={options}
-          style={styles.form}
-        />
+        <View style={styles.formWrapper}>
+          <Form
+            ref="form"
+            type={Person}
+            options={options}
+            style={styles.form}
+          />
+        </View>
         <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
-          <Text style={styles.buttonText}>Save</Text>
+          <Text style={styles.buttonText}>Get in line</Text>
         </TouchableHighlight>
       </View>
     );
@@ -108,7 +109,13 @@ var GetInLineForm = React.createClass({
 
 
 var styles = StyleSheet.create({
-
+  minute: {
+    fontSize: 25
+  },
+  formWrapper: {
+    marginLeft: 20,
+    marginRight: 20
+  },
   waitTime: {
     alignSelf: 'center',
     justifyContent: 'center',
@@ -118,10 +125,10 @@ var styles = StyleSheet.create({
     marginTop: 20,
     marginBottom: 20,
     borderRadius: 100,
-    borderWidth: 10,
+    borderWidth: 5,
     borderColor: '#15D3A4',
-    width: 150,
-    height: 150,
+    width: 175,
+    height: 175,
     alignSelf: 'center',
     justifyContent: 'center'
   },
@@ -137,17 +144,17 @@ var styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: 'white',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   button: {
     height: 36,
-    backgroundColor: '#48BBEC',
-    borderColor: '#48BBEC',
-    borderWidth: 1,
     borderRadius: 8,
     marginBottom: 10,
     alignSelf: 'stretch',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#15D3A4',
+    marginRight: 20,
+    marginLeft: 20
   }
 });
 
