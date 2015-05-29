@@ -5,7 +5,8 @@ var React = require('react-native');
 var t = require('tcomb-form-native');
 var Form = t.form.Form;
 var Firebase = require('firebase-react-native');
-
+var KeyboardEvents = require('react-native-keyboardevents');
+var KeyboardEventEmitter = KeyboardEvents.Emitter;
 
 
 var {
@@ -18,8 +19,7 @@ var {
 
 // here we are: define your domain model
 var Person = t.struct({
-  firstName: t.Str,              // a required string
-  lastName: t.Str,
+  fullName: t.Str,              // a required string
   howManyPeople: t.Num,  			// an optional string using t.maybe(t.str)
   phone: t.Num,               // a required number
 });
@@ -39,9 +39,18 @@ var GetInLineForm = React.createClass({
         TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
             that._processingReservations(snapshot);
         });
+
+        KeyboardEventEmitter.on(KeyboardEvents.KeyboardDidShowEvent, (frames) => {
+	      this.setState({keyboardSpace: frames.end.height});
+	    });
+	    KeyboardEventEmitter.on(KeyboardEvents.KeyboardWillHideEvent, (frames) => {
+	      this.setState({keyboardSpace: 0});
+	    });
+
         //genreate datasource
         return {
-          data: []
+        	keyboardSpace: 0,
+          	data: []
         };
     },
 
@@ -69,9 +78,10 @@ var GetInLineForm = React.createClass({
       console.log(value); // value here is an instance of Person
   		var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
   		TapEatFireBase.child("reservations/" + restaurantId).push({
-  			customerName: value.firstName + " " + value.lastName,
+  			createTime: Date.now(),
+  			customerName: value.fullName,
  			customerPhone: value.phone,
-			customerUsername: value.firstName + value.lastName,
+			customerUsername: value.fullName,
 			partySize: value.howManyPeople,
 			restaurantName: restaurantId
   		});
@@ -102,6 +112,7 @@ var GetInLineForm = React.createClass({
         <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Get in line</Text>
         </TouchableHighlight>
+        <View style={{height: this.state.keyboardSpace}}></View>
       </View>
     );
   }
