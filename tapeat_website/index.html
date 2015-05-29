@@ -14,13 +14,27 @@
     <div class="nav-wrapper container">
       <a id="logo-container" href="#" class="brand-logo">TapEat</a>
       <ul class="right hide-on-med-and-down">
-        <li><a href="#">Login</a></li>
+        <li><a class="modal-trigger desktop-login" href="#login-popup">Login</a></li>
       </ul>
 
       <ul id="nav-mobile" class="side-nav">
         <li><a href="#">Login</a></li>
       </ul>
       <a href="#" data-activates="nav-mobile" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+    </div>
+
+     <!-- Modal Structure -->
+    <div id="login-popup" class="modal">
+      <div class="modal-content">
+        <div class="container">
+          <!-- Page Content goes here -->
+          <a id="business-login" class="waves-effect waves-light btn-large"><i class="mdi-social-share left"></i>Business Facebook login</a>
+          <a class="waves-effect waves-light btn-large"><i class="mdi-social-person-outline left"></i>Customer Facebook login</a>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Cancel</a>
+      </div>
     </div>
   </nav>
 
@@ -189,9 +203,10 @@
   <!--  Scripts-->
   <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
   <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
-  <script src="js/display_data.js"></script>
   <script src="js/materialize.js"></script>
   <script src="js/init.js"></script>
+  <script src="js/display_data.js"></script>
+  <script src="js/tapeat-app.js"></script>
 
   </body>
 </html>
