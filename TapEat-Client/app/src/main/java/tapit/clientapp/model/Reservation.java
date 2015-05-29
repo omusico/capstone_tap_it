@@ -10,14 +10,16 @@ public class Reservation {
     private String customerName;
     private String customerUsername;
     private String customerPhone;
+    private String checkinTime;
 
-    public Reservation(String restaurantName, int partySize, String peference, String customerName, String customerUsername, String customerPhone) {
+    public Reservation(String restaurantName, int partySize, String peference, String customerName, String customerUsername, String customerPhone, String checkinTime) {
         RestaurantName = restaurantName;
         this.partySize = partySize;
         this.peference = peference;
         this.customerName = customerName;
         this.customerUsername = customerUsername;
         this.customerPhone = customerPhone;
+        this.checkinTime = checkinTime;
     }
 
     public Reservation(){}
@@ -45,4 +47,6 @@ public class Reservation {
     public String getCustomerPhone() {
         return customerPhone;
     }
+
+    public String getCheckinTime() { return checkinTime; }
 }
