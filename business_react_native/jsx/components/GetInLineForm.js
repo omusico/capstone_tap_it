@@ -211,8 +211,8 @@ var GetInLineForm = React.createClass({
         </View>
 
         <View style={styles.formWrapper}>
-          <TextInput returnKeyType='next' onEndEditing={this.focusPhone} value={this.state.name} placeholder='name' style={this.state.nameValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({name: text})} />
-          <TextInput returnKeyType='next' value={this.state.phone} onEndEditing={this.focusPartySize} ref='phone' placeholder='phone' keyboardType='number-pad' style={this.state.phoneValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({phone: text})} />
+          <TextInput returnKeyType='next' onSubmitEditing={this.focusPhone} value={this.state.name} placeholder='name' style={this.state.nameValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({name: text})} />
+          <TextInput returnKeyType='next' value={this.state.phone} onSubmitEditing={this.focusPartySize} ref='phone' placeholder='phone' keyboardType='number-pad' style={this.state.phoneValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({phone: text})} />
           <TextInput returnKeyType='done' value={this.state.partySize} ref='partySize' placeholder='party size' keyboardType='number-pad' style={this.state.partySizeValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({partySize: text})} />
 
         </View>
