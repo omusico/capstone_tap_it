@@ -11,8 +11,11 @@ var KeyboardEventEmitter = KeyboardEvents.Emitter;
 
 var {
   StyleSheet, 
-  Text, 
+  Text,
+  TextInput,
+  SliderIOS, 
   View, 
+  AlertIOS,
   TouchableHighlight
 } = React;
 
@@ -25,9 +28,24 @@ var Person = t.struct({
 });
 
 var options = {
-  auto: 'placeholders'
+  fields: {
+    fullName: {
+      keyboardType: 'default'
+    },
+    howManyPeople: {
+      keyboardType: 'numeric',
+    },
+    phone: {
+      keyboardType: 'phone-pad',
+    }
+
+  },
+    auto: 'placeholders'
+
+
 }; // optional rendering options (see documentation)
 
+  // auto: 'placeholders'
 
 var GetInLineForm = React.createClass({
 
@@ -50,7 +68,13 @@ var GetInLineForm = React.createClass({
         //genreate datasource
         return {
         	keyboardSpace: 0,
-          	data: []
+          	data: [],
+            name:'',
+            phone:'',
+            partySize:'',
+            nameValid: true,
+            phoneValid: true,
+            partySizeValid:true
         };
     },
 
@@ -71,21 +95,106 @@ var GetInLineForm = React.createClass({
     },
 
   onPress: function () {
+    console.log(this.state);
+    console.log(this.isValidName(this.state.name));
+
+    if(this.isValidName(this.state.name)){
+      this.setState({
+        nameValid: true
+      })
+    }else{
+      this.setState({
+        nameValid: false
+      })
+    }
+
+    if(this.isValidPhone(this.state.phone)){
+      this.setState({
+        phoneValid: true
+      })
+    }else{
+      this.setState({
+        phoneValid: false
+      })
+    }
+
+    if(this.isValidPartySize(this.state.partySize)){
+      this.setState({
+        partySizeValid: true
+      })
+    }else{
+      this.setState({
+        partySizeValid: false
+      })
+    }
+
 
   	var restaurantId = "dtfSeattleUniversityVillage1";  //this value can be filled by parse.
-    var value = this.refs.form.getValue();
-    if (value) { // if validation fails, value will be null
-      console.log(value); // value here is an instance of Person
+    if (this.isValidName(this.state.name)&&this.isValidPhone(this.state.phone)&&this.isValidPartySize(this.state.partySize)) { // if validation fails, value will be null
   		var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
   		TapEatFireBase.child("reservations/" + restaurantId).push({
   			createTime: Date.now(),
-  			customerName: value.fullName,
- 			customerPhone: value.phone,
-			customerUsername: value.fullName,
-			partySize: value.howManyPeople,
+  			customerName: this.state.name,
+ 			customerPhone: this.state.phone,
+			customerUsername: this.state.name,
+			partySize: this.state.partySize,
 			restaurantName: restaurantId
   		});
+      this.setState({
+        name: '',
+        phone: '',
+        partySize: ''
+      })
+      var succeedMessage = 'Checked in name: '+ this.state.name + "\n" +
+            'Party size: ' + this.state.partySize + "\n" + 
+            'We will contact you at ' + this.state.phone;
+
+      console.log(succeedMessage);
+
+      AlertIOS.alert(
+            'Check in succeed!!',
+            succeedMessage
+          )
     }
+  },
+
+  isValidName: function(name) {
+    if(!name || name.length == 0 || name.length > 20){
+      return false;
+    }else{
+      return true;
+    }
+  },
+
+  isValidPartySize: function(partySize) {
+    var size = parseInt(partySize);
+    if(isNaN(size) || size <=0 || size>=16){
+      return false;
+    }else{
+      return true;
+    }
+
+
+  },
+
+  isValidPhone: function(phone) {
+    if(!phone.match(/\d/g)){
+      return false;
+    }else{
+      if(phone.match(/\d/g).length===10){
+        return true;
+      }else{
+        return false;
+      }
+    }
+    // return phone.match(/\d/g).length===10;
+  },
+
+  focusPhone: function(){
+    this.refs.phone.focus();
+  },
+  focusPartySize: function() {
+    this.refs.partySize.focus();
   },
 
   render: function() {
@@ -102,12 +211,10 @@ var GetInLineForm = React.createClass({
         </View>
 
         <View style={styles.formWrapper}>
-          <Form
-            ref="form"
-            type={Person}
-            options={options}
-            style={styles.form}
-          />
+          <TextInput returnKeyType='next' onEndEditing={this.focusPhone} value={this.state.name} placeholder='name' style={this.state.nameValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({name: text})} />
+          <TextInput returnKeyType='next' value={this.state.phone} onEndEditing={this.focusPartySize} ref='phone' placeholder='phone' keyboardType='number-pad' style={this.state.phoneValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({phone: text})} />
+          <TextInput returnKeyType='done' value={this.state.partySize} ref='partySize' placeholder='party size' keyboardType='number-pad' style={this.state.partySizeValid?styles.inputText:styles.inputTextError} onChangeText={(text) => this.setState({partySize: text})} />
+
         </View>
         <TouchableHighlight style={styles.button} onPress={this.onPress} underlayColor='#99d9f4'>
           <Text style={styles.buttonText}>Get in line</Text>
@@ -120,6 +227,25 @@ var GetInLineForm = React.createClass({
 
 
 var styles = StyleSheet.create({
+
+  inputText: {
+    fontSize: 10,
+    borderRadius: 5, 
+    padding: 7, 
+    marginBottom: 15, 
+    height: 30, 
+    borderColor: '#C8C8C8', 
+    borderWidth: 1
+  },
+  inputTextError: {
+    fontSize: 10,
+    borderRadius: 5, 
+    padding: 7, 
+    marginBottom: 15, 
+    height: 30, 
+    borderColor: 'red', 
+    borderWidth: 1
+  },
   minute: {
     fontSize: 25
   },
