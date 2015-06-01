@@ -1,0 +1,17 @@
+{
+  "name": "business_react_native",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node_modules/react-native/packager/packager.sh"
+  },
+  "dependencies": {
+    "firebase-react-native": "0.0.1",
+    "react-native": "^0.4.4",
+    "react-native-device": "^0.2.0",
+    "react-native-keyboardevents": "^0.3.5",
+    "tcomb": "^1.0.3",
+    "tcomb-form-native": "^0.1.8",
+    "tcomb-validation": "^1.0.4"
+  }
+}
