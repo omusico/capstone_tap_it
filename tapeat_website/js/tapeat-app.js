@@ -42,7 +42,7 @@ function hideTable(){
 	$("#tapeat-intro").show();
 	$("#tapeat-content").show();
 	$("#tapeat-contact").show();
-	$("#tapeat-reservation-table tbody").replaceWith("");
+	$("#tapeat-reservation-table tbody").replaceWith("<tbody></tbody>");
 	$("#tapeat-reservation-table").hide();
 }
 
@@ -102,7 +102,7 @@ function authDataCallback(authData) {
 	  if(snap.val()){
 	  	var userRoleValue = snap.val();
 	  	if(userRoleValue === "restaurant"){
-  			showReservationWithoutModify(authData.facebook.id);
+  			showReservationWithoutModify(authData.facebook.id, false);
 	  	}
 	  }
 	});
