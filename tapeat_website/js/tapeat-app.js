@@ -1,15 +1,37 @@
+function removeCustomer(e){
+	  var card = $(e.target).closest(".waitline-card");
+	  var firebaseRemove = ref.child('reservations/' + card.attr('id'));
+	  $(card).find('#card_text').html('Successfully Canceled');
+	  
+	  card.hasClass('flipped') ? card.removeClass("flipped") : card.addClass("flipped");
+
+	  var onComplete = function(error) {
+	    if (error) {
+	      console.log('Cannot cancel customer.');
+	    } else {
+	      console.log('Successfully canceled!');
+	    }
+	  };
+
+	  $(card).fadeOut(2000,'easeInCirc', function(){
+	    firebaseRemove.remove(onComplete);
+	  });
+}
+
 function genreateReservationCard (reservations) {
       var waiterCard = $('#tapeat-reservation-card-for-waiter');
       waiterCard.html('');
       for (var reservation in reservations){
         // Card Components
-        var cardComponent = '<div class="col s12 m6 waitline-card"> <div class="card white"> <div class="card-content"> <div class="left-panel col s2 m2 center-align"> <img id="profile_picture"class="profile"/> <p>Party Size: <span>2</span></p> </div> <div class="right-panel col s10 m10"> <div class="row"> <div class="col s12 m12"> <p id="customer_name">Customer</p> </div> </div> <div class="card-action"> <div class="col s3 m3"> <a data-option="confirm"><i class="custome mdi-navigation-check"></i></a> </div> <div class="col s3 m3"><a data-option="text"><i class="custome mdi-action-question-answer"></i></a> </div> <div class="col s3 m3"><a data-option="call"><i class="custome mdi-notification-phone-in-talk"></i></a> </div> <div class="col s3 m3"><a data-option="cancel"><i class="custome mdi-navigation-close"></i></a></div> </div> </div> </div>';
+        var cardComponent = '<div class="col s12 m6 waitline-card effect_click"> <div class="card white"> <div class="card-content card_front"> <div class="left-panel col s2 m2 center-align"> <img id="profile_picture"class="profile"/> <p>Party Size: <span id="party_size">2</span></p> </div> <div class="right-panel col s10 m10"> <div class="row"> <div class="col s12 m12"> <p id="customer_name">Customer</p> </div> </div> <div class="card-action"> <div class="col s3 m3"> <a data-option="confirm"><i class="custome mdi-navigation-check"></i></a> </div> <div class="col s3 m3"><a data-option="text"><i class="custome mdi-action-question-answer"></i></a> </div> <div class="col s3 m3"><a data-option="call"><i class="custome mdi-notification-phone-in-talk"></i></a> </div> <div class="col s3 m3"><a class="cancel" data-option="cancel"><i class="custome mdi-navigation-close"></i></a></div> </div> </div> </div> <div class="card_back"> <span id="card_text">back</span> </div> </div> </div>';
         var customerCard = $(cardComponent);
         var specificReservation = reservations[reservation];
         customerCard.first().attr('id', reservation);
+        customerCard.find('#party_size').html(specificReservation.partySize);
         customerCard.find('#profile_picture').attr('data-name',specificReservation.customerName);
         customerCard.find('#customer_name').html(specificReservation.customerName);
         customerCard.find("[data-option='call']").attr("href", "tel:+" + specificReservation.customerPhone);
+        customerCard.find("a[data-option='cancel']").click(removeCustomer);
         waiterCard.append(customerCard);
       };
       $('.profile').initial();
