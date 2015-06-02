@@ -46,6 +46,10 @@ p {
   }
 }
 
+.facebook-login, .facebook-login:hover{
+  background-color: #3b5998;
+}
+
 
 .icon-block {
   padding: 0 15px;
