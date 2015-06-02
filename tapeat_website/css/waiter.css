@@ -4,7 +4,7 @@
  * the core Materialize files in the future
  *
  * Made By MaterializeCSS.com
- * Main color: 15D3A4
+ * Main color: #15D3A4
  */
 nav{
   background-color: #15D3A4;
@@ -68,6 +68,15 @@ p {
   padding:0px;
 }
 
+.card .card-action a{
+  color: #15D3A4;
+  opacity:0.9;
+}
+
+.card .card-action .cancel{
+  color: #E53935;
+}
+
 .card-content .right-panel .row{
   margin:5px auto;
 }
@@ -89,6 +98,37 @@ p {
 
 i.custome {
   font-size:2.5rem;
+}
+
+/* card animation properties */
+
+.card_back {
+  position:absolute;
+  left: 50%;
+  top: 50%;
+}
+
+.card_front,
+.card_back {
+  -webkit-backface-visibility: hidden;
+          backface-visibility: hidden;
+  -webkit-transition: -webkit-transform 0.3s;
+          transition: transform 0.3s;
+}
+
+.card_back {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.effect_click.flipped .card_front {
+  -webkit-transform: rotateY(-180deg);
+          transform: rotateY(-180deg);
+}
+
+.effect_click.flipped .card_back {
+  -webkit-transform: translateX(-50%) translateY(-50%) rotateY(0);
+          transform: translateX(-50%) translateY(-50%) rotateY(0);
 }
 
 @media only screen and (max-width : 992px) {
