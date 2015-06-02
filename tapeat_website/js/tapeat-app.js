@@ -88,7 +88,10 @@ function authDataCallback(authData) {
   loginLink.hide();
   logoutLink.hide();
   if (authData) {
-  	userInfo.children().first().html(authData.facebook.displayName);
+  	userInfo.children().map(function(index, element){
+  		$(element).html(authData.facebook.displayName);
+  	});
+
   	userInfo.show();
   	logoutLink.show();
   	logoutLink.on("click", function(){
@@ -102,6 +105,8 @@ function authDataCallback(authData) {
 	  	if(userRoleValue === "restaurant"){
   			showReservationWithoutModify(authData.facebook.id, false);
 	  	}
+	  }else{
+	  	afterUserFirstTimeLogin(isRestaurant, authData);
 	  }
 	});
 
@@ -125,8 +130,6 @@ function authDataCallback(authData) {
 		    }else{
 		    	logError(ref, error);
 		    }
-		  } else{
-		  	afterUserFirstTimeLogin(isRestaurant, authData);
 		  }
 		});
 	});
