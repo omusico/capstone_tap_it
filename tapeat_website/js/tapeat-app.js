@@ -48,7 +48,7 @@ function hideTable(){
 
 
 function showReservationWithoutModify(restaurantId, turnOff){
-	//TODO: delete this after change all id to facebook id
+	//TODO: delete this after change all id to facebook buttonId
 	restaurantId = "dtfSeattleUniversityVillage1"
 	var restaurantReservation = ref.child("reservations/" + restaurantId);
 
@@ -94,8 +94,6 @@ function authDataCallback(authData) {
   	logoutLink.on("click", function(){
   		ref.unauth();
   	});
-  	$('#login-popup').closeModal();
-
 
   	var userRole = ref.child("users" + "/" + authData.facebook.id + "/userRole");
 	userRole.once("value", function(snap) {
@@ -113,8 +111,7 @@ function authDataCallback(authData) {
   	showReservationWithoutModify(null, true);
 
   	var isRestaurant = getParameterByName("isRestaurant");
-  	var buttonId = isRestaurant ? "#business-login" : "#customer-login";
-  	$(buttonId).on("click", function(){
+  	$(".login-link").on("click", function(){
 		ref.authWithOAuthPopup("facebook", function(error, authData) {
 		  if (error) {
 		    if (error.code === "TRANSPORT_UNAVAILABLE") {
@@ -141,8 +138,7 @@ function authDataCallback(authData) {
 var ref;
 
 $(document).ready(function(){
-	$(".modal-trigger").leanModal();
-	
+
 	ref = new Firebase("https://tapeat.firebaseio.com/");
 	ref.onAuth(authDataCallback);
 });
