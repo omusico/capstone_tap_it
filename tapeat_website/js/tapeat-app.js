@@ -161,6 +161,8 @@ function authDataCallback(authData) {
 		    	logError(ref, error);
 		    }
 		  }
+		}, {
+		  scope: "email, public_profile, user_friends" // the permissions requested
 		});
 	});
   }
