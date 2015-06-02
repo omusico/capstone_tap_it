@@ -136,6 +136,7 @@ function authDataCallback(authData) {
 		  if(userRoleValue){
 		  	displayReservations(authData.facebook.id, userRoleValue, false);
 		  }else{
+		  	var isRestaurant = getParameterByName("isRestaurant");
 		  	afterUserFirstTimeLogin(isRestaurant, authData);
 		  }
 	});
@@ -145,7 +146,6 @@ function authDataCallback(authData) {
 
   	displayReservations(null, null, true);
 
-  	var isRestaurant = getParameterByName("isRestaurant");
   	$(".login-link").on("click", function(){
 		ref.authWithOAuthPopup("facebook", function(error, authData) {
 		  if (error) {
