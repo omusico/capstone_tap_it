@@ -48,13 +48,17 @@ function logError(ref, error){
 }
 
 
+function getUserRole(isRestaurant){
+	return isRestaurant ? "restaurant" : "customer";
+}
+
 function afterUserFirstTimeLogin(isRestaurant, authData){
 	var userRef = ref.child("users" + "/" + authData.facebook.id);
 	var userData = {
 			signInTime: Date.now(),
 			userName: authData.facebook.displayName,
 			userEmail: authData.facebook.email || null,
-			userRole: isRestaurant ? "restaurant" : "customer",
+			userRole: getUserRole(isRestaurant),
 			userProfile: authData.facebook.cachedUserProfile,
 			facebookAccessToken: authData.facebook.accessToken
 		};
@@ -138,6 +142,8 @@ function authDataCallback(authData) {
 		  }else{
 		  	var isRestaurant = getParameterByName("isRestaurant");
 		  	afterUserFirstTimeLogin(isRestaurant, authData);
+		  	var userRoleValue = getUserRole(isRestaurant);
+		  	displayReservations(authData.facebook.id, userRoleValue, false);
 		  }
 	});
 
