@@ -1,0 +1,23 @@
+{
+  "name": "tapeat_website",
+  "version": "1.0.0",
+  "description": "Tapeat web application",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xyx2011/capstone_tap_it/tree/master/tapeat_website"
+  },
+  "keywords": [
+    "tapeat"
+  ],
+  "author": "yuxuan xue",
+  "license": "MIT",
+  "dependencies": {
+    "connect": "^3.3.5",
+    "serve-static": "^1.9.3"
+  }
+}
