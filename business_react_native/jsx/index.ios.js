@@ -10,6 +10,9 @@ var TapEatNavigator = require('./components/TapEatNavigator');
 var ReservationListView = require('./components/ReservationListView');
 var GetInLineForm = require('./components/GetInLineForm');
 var Modal = require('react-native-modal');
+var Firebase = require('firebase-react-native');
+var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
+
 var key= "loggedIn";
 var {
   AsyncStorage,
@@ -22,6 +25,8 @@ var {
   TextInput,
   View,
 } = React;
+
+
 
 var NavBar = React.createClass({
 
@@ -47,11 +52,13 @@ var TapEat = React.createClass({
       email:'',
       phone:'',
       password:'',
-      loggedIn: true
+      loggedIn: true,
+      repeatedName: false
 
     }
   },
   componentDidMount: function() {
+
     AsyncStorage.getItem(key)
       .then((value) => {
         if (value !== null){
@@ -76,12 +83,37 @@ var TapEat = React.createClass({
   },
 
   submit: function() {
+
     console.log("activated");
-    AsyncStorage.setItem(key, "loggedIn")
-      .then(() => console.log('Saved selection to disk: ' + 'loggedIn'))
-      .catch((error) => console.log('AsyncStorage error: ' + error.message))
-      .done();
-    this.setState({loggedIn: true});
+    var that = this;
+      var restaurantRef = TapEatFireBase.child("restaurants/" + this.state.name);
+      restaurantRef.once("value", function(snapshoot){
+          if(snapshoot.val()){
+            that.setState({
+              repeatedName: true
+            })
+          }else{
+
+                restaurantRef.set({
+                    createTime: Date.now(),
+                    restaurantName: that.state.name,
+                    restaurantPhone: that.state.phone,
+                    restaurantAddress: that.state.address,
+                    restaurantEmail: that.state.email,
+                    restaurantPassword: that.state.password
+                });
+
+                AsyncStorage.setItem(key, "loggedIn")
+                  .then(() => console.log('Saved selection to disk: ' + 'loggedIn'))
+                  .catch((error) => console.log('AsyncStorage error: ' + error.message))
+                  .done();
+                that.setState({loggedIn: true});
+              
+            };
+
+            
+          
+      });
 
   },
   focusPhone: function(){
@@ -132,7 +164,7 @@ var TapEat = React.createClass({
         display = (
             <View style={styles.signupView}>
               <Text style={styles.signUpTitle}>Sign up</Text>
-              <TextInput returnKeyType='next' onSubmitEditing={this.focusPhone} value={this.state.name} placeholder='Restaurant Name' style={styles.inputText} onChangeText={(text) => this.setState({name: text})} />
+              <TextInput returnKeyType='next' onSubmitEditing={this.focusPhone} value={this.state.name} placeholder='Restaurant Name' style={this.state.repeatedName?styles.inputTextError:styles.inputText} onChangeText={(text) => this.setState({name: text})} />
               <TextInput returnKeyType='next' value={this.state.phone} onSubmitEditing={this.focusAddress} ref='phone' placeholder='Restaurant Phone' keyboardType='number-pad' style={styles.inputText} onChangeText={(text) => this.setState({phone: text})} />
               <TextInput returnKeyType='next' onSubmitEditing={this.focusEmail} value={this.state.address} ref='address' placeholder='Restaurant Address' style={styles.inputText} onChangeText={(text) => this.setState({address: text})} />
               <TextInput returnKeyType='next' onSubmitEditing={this.focusPassword} value={this.state.email} ref='email' placeholder='Restaurant Email' style={styles.inputText} onChangeText={(text) => this.setState({email: text})} />
@@ -181,6 +213,17 @@ var styles = StyleSheet.create({
     width: 500,
     alignSelf: 'center'
 
+  },
+  inputTextError: {
+    fontSize: 10,
+    borderRadius: 5, 
+    padding: 7, 
+    marginBottom: 15, 
+    height: 30, 
+    borderColor: 'red', 
+    borderWidth: 1,
+        width: 500,
+    alignSelf: 'center'
   },
 
   layout: {
