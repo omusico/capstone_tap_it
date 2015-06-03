@@ -1,3 +1,5 @@
+var port = 3000;
+
 var express = require('express');
 var cors = require('cors');
 var plivo = require('plivo-node');
@@ -21,8 +23,7 @@ app.post('/SMS', function(req, res) {
 		res.send('Status: ' + status + 'API Response: ' + response);
 	});
 	console.log(req.body);
-	res.json(req.body);
 });
 
-app.listen(3000);
-console.log("listen")
+app.listen(port);
+console.log("listen on : localhost:" + port);
