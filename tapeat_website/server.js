@@ -25,5 +25,6 @@ app.post('/SMS', function(req, res) {
 	console.log(req.body);
 });
 
-app.listen(process.env.PORT || defaultPort);
+var port = process.env.PORT || defaultPort;
+app.listen(port);
 console.log("listen on : localhost:" + port);
