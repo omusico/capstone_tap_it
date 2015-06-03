@@ -1,0 +1,33 @@
+{
+  "name": "tapeat_website",
+  "version": "1.0.0",
+  "description": "tapeat website",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.12.4",
+    "connect": "^3.3.5",
+    "cors": "^2.7.1",
+    "ejs": "^2.3.1",
+    "express": "^4.12.4",
+    "plivo-node": "git://github.com/plivo/plivo-node.git",
+    "serve-static": "^1.9.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/xyx2011/capstone_tap_it.git"
+  },
+  "keywords": [
+    "tapeat"
+  ],
+  "author": "TapEat",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xyx2011/capstone_tap_it/issues"
+  },
+  "homepage": "https://github.com/xyx2011/capstone_tap_it"
+}
