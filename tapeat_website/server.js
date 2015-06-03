@@ -1,4 +1,4 @@
-var port = 3000;
+var defaultPort = 3000;
 
 var express = require('express');
 var cors = require('cors');
@@ -25,5 +25,5 @@ app.post('/SMS', function(req, res) {
 	console.log(req.body);
 });
 
-app.listen(port);
+app.listen(process.env.PORT || defaultPort);
 console.log("listen on : localhost:" + port);
