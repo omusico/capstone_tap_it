@@ -4,7 +4,9 @@
   "description": "tapeat website",
   "main": "server.js",
   "dependencies": {
+    "body-parser": "^1.12.4",
     "connect": "^3.3.5",
+    "cors": "^2.7.1",
     "ejs": "^2.3.1",
     "express": "^4.12.4",
     "plivo-node": "git://github.com/plivo/plivo-node.git",

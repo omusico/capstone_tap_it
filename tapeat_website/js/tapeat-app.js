@@ -1,3 +1,26 @@
+function sendSMS(event) {
+	var phone = event.data.phone;
+	var message = "TapEat: Your table is ready!";
+	//TODO: 
+	var data = {
+		"dst" : phone,
+		"msg" : message
+	};
+
+	$.ajax({
+		type: "POST",
+		url: "/SMS",
+		crossDomain: true,
+		data: JSON.stringify(data),
+		contentType: "application/json",
+		success: function(data) {
+			console.log(data);
+		}
+	})
+}
+
+
+
 function removeCustomer(e){
 	  var card = $(e.target).closest(".waitline-card");
 	  var firebaseRemove = ref.child('reservations/' + card.attr('id'));
@@ -32,6 +55,7 @@ function genreateReservationCard (reservations) {
         customerCard.find('#customer_name').html(specificReservation.customerName);
         customerCard.find("[data-option='call']").attr("href", "tel:+" + specificReservation.customerPhone);
         customerCard.find("a[data-option='cancel']").click(removeCustomer);
+        customerCard.find("a[data-option='text']").click({"phone": specificReservation.customerPhone}, sendSMS);
         waiterCard.append(customerCard);
       };
       $('.profile').initial();
