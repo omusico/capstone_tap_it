@@ -47,6 +47,7 @@ var TapEat = React.createClass({
       email:'',
       phone:'',
       password:'',
+      loggedIn: true
 
     }
   },
@@ -58,12 +59,12 @@ var TapEat = React.createClass({
 
           console.log('Recovered selection from disk: ' + value);
           this.setState({
-            isModalOpen: false
+            loggedIn: true
           })
         } else {
           console.log('Initialized with no selection on disk.');
           this.setState({
-            isModalOpen: true
+            loggedIn: false
           })
         }
       })
@@ -74,13 +75,13 @@ var TapEat = React.createClass({
     this.setState({isModalOpen: true});
   },
 
-  closeModal: function() {
+  submit: function() {
     console.log("activated");
     AsyncStorage.setItem(key, "loggedIn")
       .then(() => console.log('Saved selection to disk: ' + 'loggedIn'))
       .catch((error) => console.log('AsyncStorage error: ' + error.message))
       .done();
-    this.setState({isModalOpen: false});
+    this.setState({loggedIn: true});
 
   },
   focusPhone: function(){
@@ -108,9 +109,11 @@ var TapEat = React.createClass({
   },
 
     render: function() {
-        var date = new Date();
-        return (
-          <View style={styles.layout}>
+      var display;
+
+      if(this.state.loggedIn){
+        display = (       
+          <View style={styles.layout}>     
             <View style={styles.signInView}>
               <NavBar title="Sign In" />
               <Text onPress={() => this.removeStorage()}>
@@ -124,7 +127,10 @@ var TapEat = React.createClass({
               <NavBar title="Wait List" />
               <ReservationListView />
             </View>
-            <Modal isVisible={this.state.isModalOpen} onClose={() => this.closeModal()}>
+          </View>)
+      }else{
+        display = (
+            <View style={styles.signupView}>
               <Text style={styles.signUpTitle}>Sign up</Text>
               <TextInput returnKeyType='next' onSubmitEditing={this.focusPhone} value={this.state.name} placeholder='Restaurant Name' style={styles.inputText} onChangeText={(text) => this.setState({name: text})} />
               <TextInput returnKeyType='next' value={this.state.phone} onSubmitEditing={this.focusAddress} ref='phone' placeholder='Restaurant Phone' keyboardType='number-pad' style={styles.inputText} onChangeText={(text) => this.setState({phone: text})} />
@@ -132,16 +138,34 @@ var TapEat = React.createClass({
               <TextInput returnKeyType='next' onSubmitEditing={this.focusPassword} value={this.state.email} ref='email' placeholder='Restaurant Email' style={styles.inputText} onChangeText={(text) => this.setState({email: text})} />
               <TextInput returnKeyType='done' value={this.state.password} placeholder='Restaurant Password' ref='password' style={styles.inputText} onChangeText={(text) => this.setState({password: text})} />
 
-              <TouchableHighlight style={styles.button} onPress={this.closeModal} underlayColor='#99d9f4'>
+              <TouchableHighlight style={styles.button} onPress={this.submit} underlayColor='#99d9f4'>
                 <Text style={styles.buttonText}>Submit</Text>
-              </TouchableHighlight>        
-            </Modal>
+              </TouchableHighlight>  
+            </View>    
+
+          )
+
+      }
+
+        var date = new Date();
+        return (
+          <View style={styles.display}>
+            {display}
+              
           </View>
         );
     }
 });
 
 var styles = StyleSheet.create({
+  signupView: {
+      alignSelf: 'center',
+      justifyContent: 'center',
+      marginTop: 300
+  },
+  display: {
+    flex: 1
+  },
   signUpTitle: {
     alignSelf: 'center',
     marginBottom: 50
@@ -161,12 +185,7 @@ var styles = StyleSheet.create({
 
   layout: {
     flexDirection: 'row',
-    flex: 1,
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    top: 0
+    flex: 1
   },
   signInView: {
     backgroundColor: 'grey', 

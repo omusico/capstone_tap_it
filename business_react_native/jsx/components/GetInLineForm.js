@@ -51,19 +51,7 @@ var GetInLineForm = React.createClass({
 
     getInitialState: function() {
         //Initialzie firebase, open up websocket
-        var that = this;
-        var restaurantId = "dtfSeattleUniversityVillage1";
-        var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
-        TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
-            that._processingReservations(snapshot);
-        });
 
-        KeyboardEventEmitter.on(KeyboardEvents.KeyboardDidShowEvent, (frames) => {
-	      this.setState({keyboardSpace: frames.end.height});
-	    });
-	    KeyboardEventEmitter.on(KeyboardEvents.KeyboardWillHideEvent, (frames) => {
-	      this.setState({keyboardSpace: 0});
-	    });
 
         //genreate datasource
         return {
@@ -76,6 +64,21 @@ var GetInLineForm = React.createClass({
             phoneValid: true,
             partySizeValid:true
         };
+    },
+    componentDidMount: function() {
+              var that = this;
+        var restaurantId = "dtfSeattleUniversityVillage1";
+        var TapEatFireBase = new Firebase("https://tapeat.firebaseio.com/");
+        TapEatFireBase.child("reservations/" + restaurantId).on('value', function(snapshot) {
+            that._processingReservations(snapshot);
+        });
+
+        KeyboardEventEmitter.on(KeyboardEvents.KeyboardDidShowEvent, (frames) => {
+        this.setState({keyboardSpace: frames.end.height});
+      });
+      KeyboardEventEmitter.on(KeyboardEvents.KeyboardWillHideEvent, (frames) => {
+        this.setState({keyboardSpace: 0});
+      });
     },
 
     _processingReservations: function(snapshot: object){
