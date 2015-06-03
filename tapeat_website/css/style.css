@@ -50,7 +50,10 @@ p {
   background-color: #3b5998;
 }
 
-
+.add-customer-btn{
+  top: 85vh;
+  right: 3vh;
+}
 .icon-block {
   padding: 0 15px;
 }
