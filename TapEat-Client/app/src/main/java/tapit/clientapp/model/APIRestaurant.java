@@ -33,7 +33,31 @@ public class APIRestaurant implements Serializable {
         // convert meters to miles
         this.distance= (double) Math.round(distance * 0.000621371 * 100) / 100;
         this.phone = phone;
-        this.image = R.drawable.dingtaifung;
+
+        if(this.name == "Cheese Wizards Food Truck"){
+            this.image = R.drawable.chinesefood;
+        }else if(this.name == "Morsel"){
+            this.image = R.drawable.morsel;
+        }else if(this.name == "Itadakimasu"){
+            this.image = R.drawable.itadakimas;
+        }else if(this.name == "Aladdin Falafel Corner"){
+            this.image = R.drawable.aladin;
+        }else if(this.name == "Shawarma King"){
+            this.image = R.drawable.sharwamaking;
+        }else if(this.name == "Sunrice"){
+            this.image = R.drawable.sunrise;
+        }else if(this.name == "Guanaco's Tacos Pupuseria"){
+            this.image = R.drawable.guanacotaco;
+        }else if(this.name == "Teriyaki 1st"){
+            this.image = R.drawable.teriaki1st;
+        }else if(this.name == "Din Tai Fung"){
+                this.image = R.drawable.dingtaifung;
+        }else if(this.name == "Banh Mi Unwrapped"){
+            this.image = R.drawable.banhmiunwrapped;
+        }else{
+            this.image = R.drawable.dingtaifung;
+        }
+
         this.wait_time = 30;
     }
 
