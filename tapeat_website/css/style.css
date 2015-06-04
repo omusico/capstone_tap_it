@@ -60,4 +60,25 @@ p {
 
 footer.page-footer {
   margin: 0;
+  padding-top: 0;
+}
+
+#site-logo {
+  width: 5%;
+  height: auto;
+  margin-right: 10px;
+}
+
+.teal-color {
+  color: #15D3A4;
+}
+
+.teal-color-bg {
+  background-color: #15D3A4: 
+}
+
+.copyright {
+  text-align: center;
+  font-size: 125%;
+  color: white;
 }
