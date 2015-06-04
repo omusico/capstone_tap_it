@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.parse.ParseUser;
 
@@ -23,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tapit.clientapp.R;
-import tapit.clientapp.fragments.PreferencesFragment;
+import tapit.clientapp.fragments.ComingSoonFragment;
 import tapit.clientapp.fragments.RestaurantListFragment;
 import tapit.clientapp.hamburger_menu.DrawerListAdapter;
 import tapit.clientapp.hamburger_menu.NavItem;
@@ -143,6 +144,10 @@ public class MainActivity extends ActionBarActivity {
         DrawerListAdapter listAdapter = new DrawerListAdapter(this, mNavItems);
         mDrawerList.setAdapter(listAdapter);
 
+        TextView mUserName = (TextView) findViewById(R.id.userName);
+        String userName = ParseUser.getCurrentUser() != null ? ParseUser.getCurrentUser().get("name").toString() : "Welcome";
+        mUserName.setText(userName);
+
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             @Override
             public void onDrawerOpened(View drawerView) {
@@ -193,17 +198,17 @@ public class MainActivity extends ActionBarActivity {
     * is selected.
     * */
     private void selectItemFromDrawer(int position) {
-        Fragment preferenceFragment = new PreferencesFragment();
+        Fragment comingSoonFragment = new ComingSoonFragment();
         Fragment restaurantList = new RestaurantListFragment();
 
         Fragment currentFragment;
         switch(position) {
             case 0: currentFragment = restaurantList;
                 break;
-            case 1: currentFragment = preferenceFragment;
+            case 1: currentFragment = comingSoonFragment;
                 break;
             default:
-                currentFragment = restaurantList;
+                currentFragment = comingSoonFragment;
                 break;
         }
 

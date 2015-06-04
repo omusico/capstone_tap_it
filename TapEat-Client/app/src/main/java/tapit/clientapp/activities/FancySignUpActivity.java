@@ -98,7 +98,7 @@ public class FancySignUpActivity extends FragmentActivity {
     }
 
     public void submitForm(){
-        ParseUser user = new ParseUser();
+        final ParseUser user = new ParseUser();
         user.setUsername(getPhoneNumber());
         user.setPassword(getPhoneNumber());
         user.put("name", getCustomerName());
@@ -116,7 +116,10 @@ public class FancySignUpActivity extends FragmentActivity {
                     Log.d("error", e.toString());
                     // Sign up didn't succeed. Look at the ParseException
                     // to figure out what went wrong
-                    popToast();
+                    user.logInInBackground(getPhoneNumber(), getPhoneNumber());
+                    Intent nextActivity = new Intent(FancySignUpActivity.this,MainActivity.class);
+                    startActivity(nextActivity);
+                    finish();
                 }
             }
         });
