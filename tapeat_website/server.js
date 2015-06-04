@@ -13,10 +13,14 @@ app.use(cors());
 
 app.post('/SMS', function(req, res) {
 	// Simple phone number validation
+	// TODO: better regex
 	var phone = req.body.dst;
 	phone = phone.replace(/[^\d]/g, "");
+
 	if (phone.length === 10) {
 		phone = "+1" + phone;
+	} else if (phone[0] === 1 && phone.length === 11) {
+		phone = "+" + phone;
 	} else {
 		console.log("Invalid phone number: " + phone);
 	}
@@ -27,6 +31,7 @@ app.post('/SMS', function(req, res) {
 		'text' : req.body.msg,
 		'type' : "sms"
 	};
+
 	p.send_message(params, function (status, response) {
 		console.log(response);
 		res.send('Status: ' + status + 'API Response: ' + response);

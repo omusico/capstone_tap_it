@@ -1,22 +1,37 @@
 function sendSMS(event) {
 	var phone = event.data.phone;
-	var message = "TapEat: Your table is ready!";
-	//TODO: 
+	var message = "TapEat: Your table is ready! \nVisit our website to find out more: \nhttp://tapeat.herokuapp.com/";
+
 	var data = {
 		"dst" : phone,
 		"msg" : message
 	};
 
-	$.ajax({
+	console.log(phone);
+
+	var request = $.ajax({
 		type: "POST",
 		url: "/SMS",
 		crossDomain: true,
 		data: JSON.stringify(data),
-		contentType: "application/json",
-		success: function(data) {
-			console.log(data);
-		}
-	})
+		contentType: "application/json"
+	});
+
+	request.done(function(data) {
+		console.log(data);
+		// Flip the card: back, then forth after delay
+		var card = $(event.target).closest(".waitline-card");
+		$(card).find('#card_text').html('Message has been sent!');
+		card.hasClass('flipped') ? card.removeClass("flipped") : card.addClass("flipped");
+
+		setTimeout(function() {
+			card.hasClass('flipped') ? card.removeClass("flipped") : card.addClass("flipped");
+		}, 3000);
+	});
+
+	request.fail(function(jqXHR, textStatus) {
+		console.log("Request failed: " + textStatus);
+	});
 }
 
 
