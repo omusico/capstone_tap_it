@@ -175,7 +175,7 @@ var GetInLineForm = React.createClass({
       };
       var data = {
         "dst": this.state.phone,
-        "msg": 'Thank you for checking in! Check your wait time at https://tapeat.herokuapp.com/ We will text you again when the table is ready'
+        "msg": 'Thank you for checking in with TapEat! Check your wait time at https://tapeat.herokuapp.com/'
       }
       console.log(data);
       request.open('POST', 'https://tapeat.herokuapp.com/SMS');
