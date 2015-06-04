@@ -1,6 +1,6 @@
 function sendSMS(event) {
 	var phone = event.data.phone;
-	var message = "TapEat: Your table is ready! \nVisit our website to find out more: \nhttp://tapeat.herokuapp.com/";
+	var message = "TapEat: Your table is ready!\nhttp://tapeat.herokuapp.com/";
 
 	var data = {
 		"dst" : phone,
