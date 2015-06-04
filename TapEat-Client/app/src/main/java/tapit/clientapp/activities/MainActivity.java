@@ -207,6 +207,10 @@ public class MainActivity extends ActionBarActivity {
                 break;
         }
 
+        Bundle args = new Bundle();
+        args.putSerializable("searchResult", (Serializable)result);
+        currentFragment.setArguments(args);
+
         fragmentManager.beginTransaction()
                 .replace(R.id.mainContent, currentFragment)
                 .commit();

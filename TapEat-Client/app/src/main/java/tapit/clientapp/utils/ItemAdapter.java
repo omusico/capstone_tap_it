@@ -44,6 +44,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         holder.RestaurantImage.setImageResource(dataSource.get(position).getImage());
 
+        holder.Category.setText(dataSource.get(position).getCategories().get(0));
+
+        holder.Distance.setText(dataSource.get(position).getDistance());
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -68,11 +72,15 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         protected TextView RestaurantName;
         protected TextView wait_time;
         protected ImageView RestaurantImage;
+        protected TextView Category;
+        protected TextView Distance;
         public ViewHolder(View itemView) {
             super(itemView);
             RestaurantName =  (TextView) itemView.findViewById(R.id.RestaurantName);
             wait_time = (TextView) itemView.findViewById(R.id.wait_time);
             RestaurantImage = (ImageView) itemView.findViewById(R.id.RestaurantImage);
+            Category = (TextView) itemView.findViewById(R.id.category);
+            Distance = (TextView) itemView.findViewById(R.id.distance);
 //            itemView.setOnClickListener(new View.OnClickListener() {
 //                @Override
 //                public void onClick(View v) {

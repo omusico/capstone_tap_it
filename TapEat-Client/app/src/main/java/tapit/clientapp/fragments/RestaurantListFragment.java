@@ -24,11 +24,7 @@ public class RestaurantListFragment extends Fragment{
     private RecyclerView recyclerView;
     private RecyclerView.Adapter recycleAdapter;
     private RecyclerView.LayoutManager layoutManager;
-//
-//    Restaurant[] dataArray = new Restaurant[]{
-//            new Restaurant("Ding Tai Fung", "dtfSeattleUniversityVillage1", 40, R.drawable.dingtaifung, 47.6550232, -122.3082931),
-//            new Restaurant("Kukai Ramen", "kukaiSeattle", 15, R.drawable.kukai)
-//    };
+    List<APIRestaurant> result;
 
     public RestaurantListFragment() {
         // Required empty public constructor
@@ -38,8 +34,11 @@ public class RestaurantListFragment extends Fragment{
                              Bundle savedInstanceState){
         View root = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 
-        List<APIRestaurant> result = (List<APIRestaurant>)getArguments().get("searchResult");
-
+        try {
+            result = (List<APIRestaurant>) getArguments().get("searchResult");
+        } catch (NullPointerException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
         // For capstone
         Location dummy = new Location ("Seatte", "WA", "98195");
         List<String> address = new ArrayList<String>();
