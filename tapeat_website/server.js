@@ -12,9 +12,18 @@ app.use(express.static('./'));
 app.use(cors());
 
 app.post('/SMS', function(req, res) {
+	// Simple phone number validation
+	var phone = req.body.dst;
+	phone = phone.replace(/[^\d]/g, "");
+	if (phone.length === 10) {
+		phone = "+1" + phone;
+	} else {
+		console.log("Invalid phone number: " + phone);
+	}
+
     var params = {
 		'src': '+13305875476',
-		'dst' : req.body.dst,
+		'dst' : phone,
 		'text' : req.body.msg,
 		'type' : "sms"
 	};

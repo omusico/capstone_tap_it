@@ -24,6 +24,7 @@ var {
   Text,
   TextInput,
   View,
+  AlertIOS,
 } = React;
 
 
@@ -84,35 +85,60 @@ var TapEat = React.createClass({
 
   submit: function() {
 
-    console.log("activated");
+    
     var that = this;
-      var restaurantRef = TapEatFireBase.child("restaurants/" + this.state.name);
-      restaurantRef.once("value", function(snapshoot){
-          if(snapshoot.val()){
-            that.setState({
-              repeatedName: true
-            })
-          }else{
+    console.log(that.state.email);
+    console.log(that.state.password);
 
-                restaurantRef.set({
-                    createTime: Date.now(),
-                    restaurantName: that.state.name,
-                    restaurantPhone: that.state.phone,
-                    restaurantAddress: that.state.address,
-                    restaurantEmail: that.state.email,
-                    restaurantPassword: that.state.password
-                });
+      TapEatFireBase.createUser({
+        email: that.state.email,
+        password: that.state.password
+      }, function(error, userData) {
+        if (error) {
+          switch (error.code) {
+            case "EMAIL_TAKEN":
+              var message = "The new user account cannot be created because the email is already in use.";
+              console.log(message);
+              AlertIOS.alert("Email Taken", message);
+              break;
+            case "INVALID_EMAIL":
+              var message = "The specified email is not a valid email.";
+              console.log(message);
+              AlertIOS.alert("Email Taken", message);
+              break;
+            default:
+              console.log("Error creating user:", error);
+              var message = "The specified email is not a valid email.";
+              console.log(message);
+              AlertIOS.alert("Email Taken", message);
+          }
+        } else {
+              var restaurantRef = TapEatFireBase.child("restaurants/" + that.state.name);
+              restaurantRef.once("value", function(snapshoot){
+                  if(snapshoot.val()){
+                    that.setState({
+                      repeatedName: true
+                    })
+                  }else{
 
-                AsyncStorage.setItem(key, "loggedIn")
-                  .then(() => console.log('Saved selection to disk: ' + 'loggedIn'))
-                  .catch((error) => console.log('AsyncStorage error: ' + error.message))
-                  .done();
-                that.setState({loggedIn: true});
-              
-            };
+                        restaurantRef.set({
+                            createTime: Date.now(),
+                            restaurantName: that.state.name,
+                            restaurantPhone: that.state.phone,
+                            restaurantAddress: that.state.address,
+                            restaurantEmail: that.state.email,
+                            restaurantPassword: that.state.password
+                        });
 
-            
-          
+                        AsyncStorage.setItem(key, "loggedIn")
+                          .then(() => console.log('Saved selection to disk: ' + 'loggedIn'))
+                          .catch((error) => console.log('AsyncStorage error: ' + error.message))
+                          .done();
+                        that.setState({loggedIn: true});
+                  };
+              });
+          console.log("Successfully created user account with uid:", userData);
+        }
       });
 
   },
