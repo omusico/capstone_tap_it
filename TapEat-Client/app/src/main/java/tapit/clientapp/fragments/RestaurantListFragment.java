@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import tapit.clientapp.R;
 import tapit.clientapp.model.APIRestaurant;
+import tapit.clientapp.model.Location;
 import tapit.clientapp.utils.ItemAdapter;
 
 /**
@@ -37,6 +39,18 @@ public class RestaurantListFragment extends Fragment{
         View root = inflater.inflate(R.layout.fragment_restaurant_list, container, false);
 
         List<APIRestaurant> result = (List<APIRestaurant>)getArguments().get("searchResult");
+
+        // For capstone
+        Location dummy = new Location ("Seatte", "WA", "98195");
+        List<String> address = new ArrayList<String>();
+        List<String> categories = new ArrayList<String>();
+        address.add("4001 Stevens Way NE");
+        categories.add("Nerdy Bar");
+        dummy.setAddress(address);
+        APIRestaurant tapEatBar = new APIRestaurant("TapEat Dawg Bar", 0.1, "2068165042");
+        tapEatBar.setAddress(dummy);
+        tapEatBar.setCategories(categories);
+        result.add(0, tapEatBar);
 
         recyclerView = (RecyclerView) root.findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);

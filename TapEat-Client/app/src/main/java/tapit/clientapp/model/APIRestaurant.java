@@ -37,6 +37,10 @@ public class APIRestaurant implements Serializable {
         this.wait_time = 30;
     }
 
+    public void setCategories(List<String> categories) { this.categories = categories; }
+
+    public void setAddress (Location address) { this.location = address; }
+
     public String getName() {
         return name;
     }

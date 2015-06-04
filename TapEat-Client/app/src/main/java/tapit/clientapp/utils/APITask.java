@@ -45,6 +45,7 @@ public class APITask extends AsyncTask<String, Void, List<APIRestaurant>> {
         String location = params[0] + "," + params[1];
         request.addQuerystringParameter("ll", location);
         request.addQuerystringParameter("limit", String.valueOf(SEARCH_LIMIT));
+        request.addQuerystringParameter("term", "food");
 
         // Sign and send request.
         System.out.println("Querying " + request.getCompleteUrl() + " ...");
@@ -72,7 +73,7 @@ public class APITask extends AsyncTask<String, Void, List<APIRestaurant>> {
                 APIRestaurant rest = new APIRestaurant(
                         obj.getString("name"),
                         obj.getDouble("distance"),
-                        obj.getString("phone")
+                        obj.isNull("phone") ? "123456678" : obj.getString("phone")
                 );
                 rest.setCategories(obj.getJSONArray("categories"));
                 rest.setAddress(obj.getJSONObject("location"));
