@@ -70,11 +70,6 @@ var ReservationListView = React.createClass({
     _renderRow: function(rowData: object, sectionID: number, rowID: number) {
         return (
             <View>
-            <TouchableHighlight 
-            onLongPress={() => this._pressRow(rowID)}
-            onPressIn={() => this._pressRow(rowID)}
-            underlayColor={Theme.primaryHeaderBackgroundColor}>
-
                 <View style={styles.row}>
 
                     <Text style={styles.partyName}>
@@ -86,8 +81,6 @@ var ReservationListView = React.createClass({
                     <View style={styles.separator}  />
 
                 </View>
-
-            </TouchableHighlight>
             <View style={styles.cellBorder} />
             </View>
         );
