@@ -98,6 +98,8 @@ public class FancySignUpActivity extends FragmentActivity {
     }
 
     public void submitForm(){
+        popToast();
+
         final ParseUser user = new ParseUser();
         user.setUsername(getPhoneNumber());
         user.setPassword(getPhoneNumber());
@@ -126,7 +128,7 @@ public class FancySignUpActivity extends FragmentActivity {
     }
 
     public void popToast(){
-        Toast.makeText(this, "This phone number has been registered in our system", Toast.LENGTH_LONG).show();
+        Toast.makeText(this, "Loading", Toast.LENGTH_LONG).show();
     }
 
     /**

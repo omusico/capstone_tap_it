@@ -16,6 +16,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.parse.ParseUser;
 
@@ -147,6 +148,19 @@ public class MainActivity extends ActionBarActivity {
         TextView mUserName = (TextView) findViewById(R.id.userName);
         String userName = ParseUser.getCurrentUser() != null ? ParseUser.getCurrentUser().get("name").toString() : "Welcome";
         mUserName.setText(userName);
+
+        TextView mSignOut = (TextView) findViewById(R.id.signOut);
+        mSignOut.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ParseUser.getCurrentUser().logOut();
+                Toast.makeText(MainActivity.this, "Please come back", Toast.LENGTH_LONG).show();
+
+                Intent nextActivity = new Intent(MainActivity.this,FancySignUpActivity.class);
+                startActivity(nextActivity);
+                finish();
+            }
+        });
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
             @Override

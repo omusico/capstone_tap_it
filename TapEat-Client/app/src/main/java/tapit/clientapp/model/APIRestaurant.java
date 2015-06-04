@@ -54,7 +54,9 @@ public class APIRestaurant implements Serializable {
                 this.image = R.drawable.dingtaifung;
         }else if(this.name == "Banh Mi Unwrapped"){
             this.image = R.drawable.banhmiunwrapped;
-        }else{
+        }else if(this.name == "TapEat Dawg Bar") {
+            this.image = R.drawable.dawg_bar;
+        } else {
             this.image = R.drawable.dingtaifung;
         }
 
