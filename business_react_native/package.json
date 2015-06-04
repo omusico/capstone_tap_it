@@ -6,7 +6,7 @@
     "start": "node_modules/react-native/packager/packager.sh"
   },
   "dependencies": {
-    "firebase-react-native": "0.0.1",
+    "firebase-react-native": "0.0.2",
     "react-native": "^0.4.4",
     "react-native-device": "^0.2.0",
     "react-native-keyboardevents": "^0.3.5",

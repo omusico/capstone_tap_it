@@ -24,6 +24,7 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		9D498AB91B1FFF8500866419 /* launchScreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D498AB81B1FFF8500866419 /* launchScreen.jpg */; };
 		AFEAC3931B1EA80E00D81054 /* libRNModal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AFEAC3921B1EA80900D81054 /* libRNModal.a */; };
 /* End PBXBuildFile section */
 
@@ -144,6 +145,7 @@
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTLinking.xcodeproj; path = "node_modules/react-native/Libraries/LinkingIOS/RCTLinking.xcodeproj"; sourceTree = "<group>"; };
 		832341B01AAA6A8300B99B32 /* RCTText.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTText.xcodeproj; path = "node_modules/react-native/Libraries/Text/RCTText.xcodeproj"; sourceTree = "<group>"; };
+		9D498AB81B1FFF8500866419 /* launchScreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = launchScreen.jpg; sourceTree = "<group>"; };
 		AFEAC3821B1EA80900D81054 /* RNModal.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RNModal.xcodeproj; path = "node_modules/react-native-modal/RNModal.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -318,6 +320,7 @@
 		83CBB9F61A601CBA00E9B192 = {
 			isa = PBXGroup;
 			children = (
+				9D498AB81B1FFF8500866419 /* launchScreen.jpg */,
 				13B07FAE1A68108700A75B9A /* business_react_native */,
 				832341AE1AAA6A7D00B99B32 /* Libraries */,
 				00E356EF1AD99517003FC87E /* business_react_nativeTests */,
@@ -570,6 +573,7 @@
 			files = (
 				008F07F31AC5B25A0029DE68 /* main.jsbundle in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
+				9D498AB91B1FFF8500866419 /* launchScreen.jpg in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
