@@ -148,9 +148,7 @@ var TapEat = React.createClass({
           <View style={styles.layout}>     
             <View style={styles.signInView}>
               <NavBar title="Sign In" />
-              <Text onPress={() => this.removeStorage()}>
-                remove test key
-              </Text>
+
               <GetInLineForm />
 
             </View>

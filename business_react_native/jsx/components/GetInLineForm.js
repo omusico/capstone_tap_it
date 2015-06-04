@@ -143,11 +143,7 @@ var GetInLineForm = React.createClass({
 			partySize: this.state.partySize,
 			restaurantName: restaurantId
   		});
-      this.setState({
-        name: '',
-        phone: '',
-        partySize: ''
-      })
+
       var succeedMessage = 'Checked in name: '+ this.state.name + "\n" +
             'Party size: ' + this.state.partySize + "\n" + 
             'We will contact you at ' + this.state.phone;
@@ -158,6 +154,34 @@ var GetInLineForm = React.createClass({
             'Check in succeed!!',
             succeedMessage
           )
+      var request = new XMLHttpRequest();
+      request.setRequestHeader("Content-type","application/json");
+
+      request.onreadystatechange = (e) => {
+        if (request.readyState !== 4) {
+          return;
+        }
+
+        if (request.status === 200) {
+          console.log('success', request.responseText);
+          this.setState({
+            name: '',
+            phone: '',
+            partySize: ''
+          })
+        } else {
+          console.warn('error');
+        }
+      };
+      var data = {
+        "dst": this.state.phone,
+        "msg": 'Thank you for checking in! Check your wait time at https://tapeat.herokuapp.com/ We will text you again when the table is ready'
+      }
+      console.log(data);
+      request.open('POST', 'https://tapeat.herokuapp.com/SMS');
+      request.send(JSON.stringify(data));
+
+
     }
   },
 
@@ -190,7 +214,7 @@ var GetInLineForm = React.createClass({
         return false;
       }
     }
-    // return phone.match(/\d/g).length===10;
+
   },
 
   focusPhone: function(){
