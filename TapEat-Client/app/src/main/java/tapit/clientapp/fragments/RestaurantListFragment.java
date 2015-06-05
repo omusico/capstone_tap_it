@@ -46,6 +46,8 @@ public class RestaurantListFragment extends Fragment{
         address.add("4001 Stevens Way NE");
         categories.add("Nerdy Bar");
         dummy.setAddress(address);
+        dummy.setLatitude(47.6547676);
+        dummy.setLongitude(-122.3081654);
         APIRestaurant tapEatBar = new APIRestaurant("TapEat Dawg Bar", 0.1, "2068165042");
         tapEatBar.setAddress(dummy);
         tapEatBar.setCategories(categories);

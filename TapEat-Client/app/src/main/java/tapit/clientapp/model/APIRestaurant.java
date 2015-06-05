@@ -34,32 +34,33 @@ public class APIRestaurant implements Serializable {
         this.distance= (double) Math.round(distance * 0.000621371 * 100) / 100;
         this.phone = phone;
 
-        if(this.name == "Cheese Wizards Food Truck"){
-            this.image = R.drawable.chinesefood;
-        }else if(this.name == "Morsel"){
-            this.image = R.drawable.morsel;
-        }else if(this.name == "Itadakimasu"){
-            this.image = R.drawable.itadakimas;
-        }else if(this.name == "Aladdin Falafel Corner"){
-            this.image = R.drawable.aladin;
-        }else if(this.name == "Shawarma King"){
-            this.image = R.drawable.sharwamaking;
-        }else if(this.name == "Sunrice"){
-            this.image = R.drawable.sunrise;
-        }else if(this.name == "Guanaco's Tacos Pupuseria"){
-            this.image = R.drawable.guanacotaco;
-        }else if(this.name == "Teriyaki 1st"){
-            this.image = R.drawable.teriaki1st;
-        }else if(this.name == "Din Tai Fung"){
-                this.image = R.drawable.dingtaifung;
-        }else if(this.name == "Banh Mi Unwrapped"){
-            this.image = R.drawable.banhmiunwrapped;
-        }else if(this.name == "TapEat Dawg Bar") {
+        if(this.name.equals("TapEat Dawg Bar")) {
             this.image = R.drawable.dawg_bar;
-        } else {
-            this.image = R.drawable.dingtaifung;
+        }else if(this.name.equals("Cheese Wizards Food Truck")){
+            this.image = R.drawable.chinesefood;
+        }else if(this.name.equals("Morsel")){
+            this.image = R.drawable.morsel;
+        }else if(this.name.equals("Itadakimasu")){
+            this.image = R.drawable.itadakimas;
+        }else if(this.name.equals("Aladdin Falafel Corner")){
+            this.image = R.drawable.aladin;
+        }else if(this.name.equals("Shawarma King")){
+            this.image = R.drawable.sharwamaking;
+        }else if(this.name.equals("Sunrice")){
+            this.image = R.drawable.sunrise;
+        }else if(this.name.equals("Guanaco's Tacos Pupuseria")){
+            this.image = R.drawable.guanacotaco;
+        }else if(this.name.equals("Teriyaki 1st")){
+            this.image = R.drawable.teriaki1st;
+        }else if(this.name.equals("Banh Mi Unwrapped")){
+            this.image = R.drawable.banhmiunwrapped;
+        }else if(this.name.equals("EJ Burger")){
+            this.image = R.drawable.ej_burger;
+        }else if(this.name.equals("Noodle Nation")){
+            this.image = R.drawable.noodle_nation;
+        }else {
+            this.image = R.drawable.default_image;
         }
-
         this.wait_time = 30;
     }
 
@@ -88,7 +89,7 @@ public class APIRestaurant implements Serializable {
     }
 
     public String getWaitTime() {
-        return Integer.toString(wait_time) + " mins";
+        return "Sitting now";
     }
 
     public int getImage() {
